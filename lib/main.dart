@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ds_core/ds_core.dart';
+import 'core/di/locator.dart';
+import 'features/portfolio/presentation/bloc/portfolio_bloc.dart';
+import 'features/portfolio/presentation/pages/preloader_page.dart';
+import 'routes/app_router.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+  runApp(const PortfolioApp());
+}
+
+class PortfolioApp extends StatefulWidget {
+  const PortfolioApp({super.key});
+
+  @override
+  State<PortfolioApp> createState() => _PortfolioAppState();
+}
+
+class _PortfolioAppState extends State<PortfolioApp> {
+  bool _preloaderDone = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => sl<PortfolioBloc>()..add(const PortfolioDataRequested()),
+      child: MaterialApp.router(
+        title: 'Aakash Choudhary',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.dark,
+        routerConfig: appRouter,
+        builder: (context, child) {
+          if (!_preloaderDone) {
+            return PreloaderPage(
+              onComplete: () => setState(() => _preloaderDone = true),
+            );
+          }
+          return child ?? const SizedBox.shrink();
+        },
+      ),
+    );
+  }
+}

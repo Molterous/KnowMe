@@ -1,0 +1,178 @@
+{
+  "personal": {
+    "name": "Aakash Choudhary",
+    "title": "Mobile Application Developer",
+    "subtitle": "Flutter & Dart Specialist · Native Android & iOS Developer",
+    "tagline": "Building scalable cross-platform apps with 4+ years of precision.",
+    "email": "aakashgarud007@gmail.com",
+    "phone": "+91-9520366686",
+    "location": "Noida, India",
+    "available": true,
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/aakash-choudhary-92298b1ab/",
+      "github": "https://github.com/Molterous",
+      "leetcode": "https://leetcode.com/u/Molterous/"
+    }
+  },
+  "about": {
+    "bio": "Results-driven Mobile Developer with 4+ years of experience designing, developing, and deploying cross-platform and native applications across Android, iOS, and desktop. I care deeply about clean architecture, performance, and shipping things that actually work.",
+    "highlights": [
+      "4+ years of experience",
+      "3 companies, 6+ apps shipped",
+      "Android · iOS · Flutter",
+      "8.2 CGPA — B.Tech CSE"
+    ],
+    "personality_chips": [
+      "BLoC Purist",
+      "Performance Nerd",
+      "15-day revamp guy",
+      "DRM wizard",
+      "App size reducer",
+      "Clean arch advocate"
+    ]
+  },
+  "experience": [
+    {
+      "id": "wiom",
+      "company": "Wiom",
+      "role": "SDE-2",
+      "type": "Android · Flutter",
+      "location": "Gurugram",
+      "duration": "Oct 2025 – Present",
+      "start_date": "2025-10",
+      "end_date": null,
+      "current": true,
+      "summary": "Revamped end-to-end booking & payment flow for 1.7L+ users (3–4K DAU).",
+      "highlights": [
+        "Delivered complete app revamp in 15 days for the 26 Jan release under strict timeline with AI tool adaptation",
+        "Built and scaled a support chat system, improving engagement and reducing support friction",
+        "Improved payment reliability (JusPay) by resolving critical issues in transaction flow and receipt handling",
+        "Implemented A/B testing for booking flow, enabling data-driven UX improvements",
+        "Developed installation & router recovery flows, improving onboarding success",
+        "Reduced app size from 35MB → 15MB, improving install rate and performance",
+        "Resolved ANR/crash issues and optimised performance, improving overall app stability"
+      ],
+      "metrics": ["1.7L+ users", "35MB → 15MB", "15-day full revamp", "3–4K DAU"],
+      "tech": ["Flutter", "Android", "JusPay", "A/B Testing", "CI/CD"]
+    },
+    {
+      "id": "visionias",
+      "company": "VisionIAS",
+      "role": "Mobile Application Developer",
+      "type": "Android · Flutter · iOS",
+      "location": "Noida",
+      "duration": "Apr 2023 – Oct 2025",
+      "start_date": "2023-04",
+      "end_date": "2025-10",
+      "current": false,
+      "summary": "Delivered 3 key apps across Android, iOS & Flutter Desktop, boosting user engagement 40%.",
+      "highlights": [
+        "Delivered 3 key apps (Android, iOS, Flutter Desktop/Mobile), boosting user engagement 40%",
+        "Optimised widget rebuilds with typedef, callbacks & BLoC, improving app speed significantly",
+        "Built a custom walkthrough widget, increasing first-time user adoption 25%",
+        "Implemented video & PDF watermarking + encryption, cutting unauthorised sharing 70%",
+        "Created backend-driven widget builder, shortening release cycles 30%",
+        "Enabled native DRM-secure video playback across Android/iOS/macOS with zero lag",
+        "Added widget-to-PDF/JPG convertor and seamless sharing, improving app utility",
+        "Integrated secure payment gateways, raising in-app course purchases 15%",
+        "Built custom iOS views with graphical stats to enhance learner analytics"
+      ],
+      "metrics": ["+40% engagement", "+25% adoption", "70% less piracy", "-30% release cycles"],
+      "tech": ["Flutter", "Android", "iOS", "Swift", "BLoC", "AWS S3", "DRM", "Kotlin"]
+    },
+    {
+      "id": "zunpulse",
+      "company": "Zunpulse",
+      "role": "SDE-1",
+      "type": "Flutter · Android",
+      "location": "Gurugram",
+      "duration": "Mar 2022 – Mar 2023",
+      "start_date": "2022-03",
+      "end_date": "2023-03",
+      "current": false,
+      "summary": "Led complete app overhaul using Redux + MVC, reducing defects 30%.",
+      "highlights": [
+        "Led complete app overhaul using Redux + MVC, reducing defects 30%",
+        "Developed 3–4 modules independently, cutting time-to-market 20%",
+        "Integrated Native Views & React website via JS Channels, speeding interactions 25%",
+        "Maintained & optimized native Android code, ensuring zero integration failures"
+      ],
+      "metrics": ["-30% defects", "-20% time-to-market", "+25% interactions", "0 integration failures"],
+      "tech": ["Flutter", "Android", "Redux", "MVC", "JS Channels", "React", "Kotlin"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "vendor-tracker",
+      "title": "Vendor Tracker",
+      "subtitle": "Real-time field task coordination app",
+      "platform": ["Flutter", "Android", "iOS"],
+      "status": "completed",
+      "description": "A real-time user tracking app with Google Maps SDK, dynamic markers, and Appwrite APIs for user/task data handling. Integrated foreground/background location tracking on both Android & iOS.",
+      "highlights": [
+        "Google Maps SDK with dynamic, real-time markers",
+        "Foreground & background location tracking (Android + iOS)",
+        "BLoC for scalable state management",
+        "Appwrite backend for user/task data",
+        "Persistent logging for field task coordination"
+      ],
+      "tech": ["Flutter", "BLoC", "Google Maps SDK", "Appwrite", "Android", "iOS"],
+      "metrics": ["Real-time tracking", "Cross-platform", "BLoC architecture"]
+    },
+    {
+      "id": "cognix",
+      "title": "Cognix",
+      "subtitle": "Visual-motor reaction time test game",
+      "platform": ["Flutter", "Android", "iOS"],
+      "status": "in_review",
+      "description": "A Flutter-based visual-motor reaction time test game inspired by psychometric assessments used in cognitive science, driver training, and attention evaluation.",
+      "highlights": [
+        "Psychometric assessment-inspired game mechanics",
+        "Cross-platform Flutter (Android + iOS)",
+        "Custom game engine logic for reaction time measurement",
+        "Cognitive science methodology applied to mobile UX"
+      ],
+      "tech": ["Flutter", "Dart", "Android", "iOS"],
+      "metrics": ["In review — App Store & Play Store", "Cognitive science inspired"]
+    },
+    {
+      "id": "feature-walkthrough",
+      "title": "Feature Walkthrough Widget",
+      "subtitle": "Reusable onboarding overlay library",
+      "platform": ["Flutter", "Android", "iOS"],
+      "status": "completed",
+      "description": "A reusable walkthrough widget using GlobalKey & RenderObject for precise overlay alignment, custom styling, and transitions. Improved onboarding UX and feature discovery across multiple app modules.",
+      "highlights": [
+        "GlobalKey & RenderObject for pixel-perfect overlay positioning",
+        "Custom styling and transition support",
+        "Easy integration across multiple app modules",
+        "Increased first-time user adoption by 25%"
+      ],
+      "tech": ["Flutter", "Dart", "RenderObject", "GlobalKey"],
+      "metrics": ["+25% first-time adoption", "Modular & reusable"]
+    }
+  ],
+  "skills": {
+    "languages": ["Dart", "Kotlin", "Java", "Swift"],
+    "frameworks": ["Flutter", "Jetpack Compose", "SwiftUI"],
+    "architecture": ["BLoC", "Redux", "MVC", "MVVM", "SOLID Principles", "Clean Architecture"],
+    "tools": ["Android Studio", "Xcode", "VS Code", "Postman", "Git", "GitHub", "Jira", "Asana"],
+    "cloud": ["AWS S3", "Firebase", "Appwrite", "CI/CD Pipelines"],
+    "expertise": [
+      "DRM Video Playback",
+      "Payment Gateway Integration",
+      "Method Channels",
+      "Platform Views",
+      "App Store & Play Store Releases",
+      "Unit Testing",
+      "Performance Optimization"
+    ]
+  },
+  "education": {
+    "degree": "B.Tech — Computer Science & Engineering",
+    "institution": "Inderprastha Engineering College, Ghaziabad",
+    "affiliation": "AKTU",
+    "cgpa": "8.2",
+    "year": "2018 – 2022"
+  }
+}
