@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: transparent;
+  }
+  #c {
+    display: block;
+    background: transparent;
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: top left;
+  }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const skills = [
+  "Dart","Kotlin","Java","Swift",
+  "Flutter","Jetpack Compose","SwiftUI",
+  "BLoC","Redux","MVC","MVVM","Clean Architecture","SOLID",
+  "Android Studio","Xcode","VS Code","Postman","Git","GitHub","Jira","Asana",
+  "AWS S3","Firebase","Appwrite","CI/CD",
+  "DRM Video","Payment Gateway","Method Channels","Platform Views",
+  "App Store","Play Store","Unit Testing","Performance Opt."
+];
+
+const W = 680, H = 480, CX = W/2, CY = H/2;
+const canvas = document.getElementById('c');
+canvas.width = W; canvas.height = H;
+const ctx = canvas.getContext('2d');
+
+// Scale canvas via CSS transform to always fill the viewport
+function handleResize() {
+  const sx = window.innerWidth / W;
+  const sy = window.innerHeight / H;
+  const scale = Math.min(sx, sy);
+  const offsetX = (window.innerWidth  - W * scale) / 2;
+  const offsetY = (window.innerHeight - H * scale) / 2;
+  canvas.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+
+const COLORS = [
+  '#534AB7','#1D9E75','#D85A30','#378ADD',
+  '#D4537E','#BA7517','#639922','#3B6D11',
+  '#185FA5','#3C3489','#0F6E56','#993C1D'
+];
+
+const R = 155;
+const N = skills.length;
+
+function fibonacciSphere(n, r) {
+  const pts = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < n; i++) {
+    const y = 1 - (i / (n - 1)) * 2;
+    const radius = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    pts.push([Math.cos(theta) * radius * r, y * r, Math.sin(theta) * radius * r]);
+  }
+  return pts;
+}
+
+const spherePts = fibonacciSphere(N, R);
+
+function randomDisperse() {
+  return skills.map(() => {
+    const angle = Math.random() * Math.PI * 2;
+    const elev = (Math.random() - 0.5) * Math.PI;
+    const dist = 220 + Math.random() * 80;
+    return [
+      Math.cos(elev) * Math.cos(angle) * dist,
+      Math.sin(elev) * dist * 0.7,
+      Math.cos(elev) * Math.sin(angle) * dist
+    ];
+  });
+}
+
+let dispersePts = randomDisperse();
+
+const particles = skills.map((s, i) => ({
+  label: s,
+  color: COLORS[i % COLORS.length],
+  x: spherePts[i][0], y: spherePts[i][1], z: spherePts[i][2],
+}));
+
+let phase = 0, phaseTimer = 0;
+const SPHERE_HOLD = 280, DISPERSE_DUR = 60, DISPERSED_HOLD = 80, REFORM_DUR = 70;
+let rotY = 0, rotX = 0.18;
+
+function easeInOut(t) {
+  return t < 0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+}
+function rotateY(x, z, a) {
+  return [x*Math.cos(a)-z*Math.sin(a), x*Math.sin(a)+z*Math.cos(a)];
+}
+function rotateX(y, z, a) {
+  return [y*Math.cos(a)-z*Math.sin(a), y*Math.sin(a)+z*Math.cos(a)];
+}
+function project(x, y, z) {
+  const fov = 500;
+  const scale = fov / (fov + z + 200);
+  return [CX + x * scale, CY + y * scale, scale];
+}
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  const grd = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.1);
+  grd.addColorStop(0, 'rgba(83,74,183,0.07)');
+  grd.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, W, H);
+
+  phaseTimer++;
+
+  if (phase === 0) {
+    rotY += 0.008;
+    if (phaseTimer >= SPHERE_HOLD) { phase = 1; phaseTimer = 0; dispersePts = randomDisperse(); }
+  } else if (phase === 1) {
+    rotY += 0.004;
+    const t = easeInOut(Math.min(phaseTimer / DISPERSE_DUR, 1));
+    particles.forEach((p, i) => {
+      p.x = lerp(spherePts[i][0], dispersePts[i][0], t);
+      p.y = lerp(spherePts[i][1], dispersePts[i][1], t);
+      p.z = lerp(spherePts[i][2], dispersePts[i][2], t);
+    });
+    if (phaseTimer >= DISPERSE_DUR) { phase = 2; phaseTimer = 0; }
+  } else if (phase === 2) {
+    rotY += 0.002;
+    if (phaseTimer >= DISPERSED_HOLD) { phase = 3; phaseTimer = 0; }
+  } else if (phase === 3) {
+    rotY += 0.004;
+    const t = easeInOut(Math.min(phaseTimer / REFORM_DUR, 1));
+    particles.forEach((p, i) => {
+      p.x = lerp(dispersePts[i][0], spherePts[i][0], t);
+      p.y = lerp(dispersePts[i][1], spherePts[i][1], t);
+      p.z = lerp(dispersePts[i][2], spherePts[i][2], t);
+    });
+    if (phaseTimer >= REFORM_DUR) { phase = 0; phaseTimer = 0; }
+  }
+
+  const transformed = particles.map(p => {
+    let [rx, rz] = rotateY(p.x, p.z, rotY);
+    let [ry, rz2] = rotateX(p.y, rz, rotX);
+    return { ...p, rx, ry, rz: rz2 };
+  });
+
+  transformed.sort((a, b) => a.rz - b.rz);
+
+  if (phase === 0 || (phase === 3 && phaseTimer > REFORM_DUR * 0.7)) {
+    const opacity = phase === 3 ? (phaseTimer - REFORM_DUR * 0.7) / (REFORM_DUR * 0.3) : 1;
+    for (let i = 0; i < transformed.length; i++) {
+      for (let j = i + 1; j < transformed.length; j++) {
+        const a = transformed[i], b = transformed[j];
+        const dx = a.rx-b.rx, dy = a.ry-b.ry, dz = a.rz-b.rz;
+        const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+        if (dist < 85) {
+          const [ax, ay] = project(a.rx, a.ry, a.rz);
+          const [bx, by] = project(b.rx, b.ry, b.rz);
+          ctx.beginPath();
+          ctx.moveTo(ax, ay);
+          ctx.lineTo(bx, by);
+          ctx.strokeStyle = `rgba(150,140,220,${(1 - dist/85) * 0.18 * opacity})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  transformed.forEach(p => {
+    const [px, py, scale] = project(p.rx, p.ry, p.rz);
+    const depth = (p.rz + R + 200) / (2*R + 200);
+    const alpha = 0.55 + depth * 0.45;
+    const fontSize = Math.max(9, Math.round((10 + depth * 4) * scale * 1.4));
+
+    ctx.font = `500 ${fontSize}px -apple-system, sans-serif`;
+    const tw = ctx.measureText(p.label).width;
+    const ph = fontSize * 1.35, pw = tw + fontSize * 0.9, pr = ph / 2;
+
+    const r2 = parseInt(p.color.slice(1,3),16);
+    const g2 = parseInt(p.color.slice(3,5),16);
+    const b2 = parseInt(p.color.slice(5,7),16);
+
+    ctx.beginPath();
+    ctx.roundRect(px - pw/2, py - ph/2, pw, ph, pr);
+    ctx.fillStyle = `rgba(${r2},${g2},${b2},${alpha * 0.18})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(${r2},${g2},${b2},${alpha * 0.55})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+
+    ctx.fillStyle = `rgba(${r2},${g2},${b2},${alpha})`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(p.label, px, py);
+  });
+}
+
+function loop() { draw(); requestAnimationFrame(loop); }
+loop();
+</script>
+</body>
+</html>

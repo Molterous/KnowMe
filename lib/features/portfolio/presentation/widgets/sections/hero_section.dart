@@ -1,6 +1,11 @@
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
+import 'dart:ui_web' as ui_web;
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../../core/utils/app_assets.dart';
+import '../../../../../core/utils/app_strings.dart';
 import '../../../domain/entities/portfolio_entity.dart';
 
 class HeroSection extends StatelessWidget {
@@ -31,25 +36,27 @@ class _HeroDesktop extends StatelessWidget {
       height: MediaQuery.sizeOf(context).height * 0.92,
       child: Stack(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 6,
-                child: FadeSlideTransition(
-                  child: _HeroText(personal: personal, onViewWork: onViewWork),
+          // Sphere — right two-thirds of the hero
+          const Positioned.fill(
+            child: Row(
+              children: [
+                Spacer(),
+                Expanded(
+                  flex: 2,
+                  child: FadeSlideTransition(
+                    delay: Duration(milliseconds: 200),
+                    offset: Offset(24, 0),
+                    child: _SkillsSphereView(),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.xxl),
-              const Expanded(
-                flex: 4,
-                child: FadeSlideTransition(
-                  delay: Duration(milliseconds: 200),
-                  offset: Offset(24, 0),
-                  child: _HeroPhoto(),
-                ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          // Text — layered on top, fills the full area
+          Positioned.fill(
+            child: FadeSlideTransition(
+              child: _HeroText(personal: personal, onViewWork: onViewWork),
+            ),
           ),
           const Positioned(
             bottom: AppSpacing.xl,
@@ -72,24 +79,30 @@ class _HeroTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.section),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height * 0.92,
+      child: Stack(
         children: [
-          Expanded(
-            flex: 7,
-            child: FadeSlideTransition(
-              child: _HeroText(personal: personal, onViewWork: onViewWork),
+          // Sphere — right two-thirds of the hero
+          const Positioned.fill(
+            child: Row(
+              children: [
+                Spacer(),
+                Expanded(
+                  flex: 2,
+                  child: FadeSlideTransition(
+                    delay: Duration(milliseconds: 200),
+                    offset: Offset(24, 0),
+                    child: _SkillsSphereView(),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: AppSpacing.xl),
-          const Expanded(
-            flex: 3,
+          // Text — layered on top, fills the full area
+          Positioned.fill(
             child: FadeSlideTransition(
-              delay: Duration(milliseconds: 200),
-              offset: Offset(24, 0),
-              child: _HeroPhoto(),
+              child: _HeroText(personal: personal, onViewWork: onViewWork),
             ),
           ),
         ],
@@ -164,11 +177,11 @@ class _HeroText extends StatelessWidget {
           runSpacing: AppSpacing.md,
           children: [
             DsButton(
-              label: 'View Work',
+              label: AppStrings.viewWork,
               onTap: onViewWork,
             ),
             DsButton(
-              label: 'Say Hi →',
+              label: AppStrings.sayHi,
               variant: DsButtonVariant.ghost,
               onTap: () async {
                 final uri = Uri.parse('mailto:${personal.email}');
@@ -223,11 +236,49 @@ class _AvailableBadge extends StatelessWidget {
           ),
           const SizedBox(width: AppSpacing.sm),
           Text(
-            'Available for work',
+            AppStrings.availableForWork,
             style: AppTextStyles.labelLarge.copyWith(color: AppColors.accent),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SkillsSphereView extends StatefulWidget {
+  const _SkillsSphereView();
+
+  @override
+  State<_SkillsSphereView> createState() => _SkillsSphereViewState();
+}
+
+class _SkillsSphereViewState extends State<_SkillsSphereView> {
+  static bool _registered = false;
+  static const _viewType = 'skills-sphere';
+
+  @override
+  void initState() {
+    super.initState();
+    if (!_registered) {
+      _registered = true;
+      ui_web.platformViewRegistry.registerViewFactory(
+        _viewType,
+        (int id) => html.IFrameElement()
+          ..src = AppAssets.skillsSphere
+          ..style.border = 'none'
+          ..style.width = '100%'
+          ..style.height = '100%'
+          ..style.background = 'transparent'
+          ..setAttribute('allowtransparency', 'true')
+          ..setAttribute('scrolling', 'no'),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.expand(
+      child: HtmlElementView(viewType: _viewType),
     );
   }
 }
@@ -250,11 +301,11 @@ class _HeroPhoto extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: Image.asset(
-          'assets/images/self.jpg',
+          AppAssets.profilePhoto,
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) => Center(
             child: Text(
-              'AC',
+              AppStrings.initials,
               style: AppTextStyles.displaySmall.copyWith(color: AppColors.accent),
             ),
           ),

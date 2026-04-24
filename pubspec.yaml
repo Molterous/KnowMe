@@ -32,3 +32,5 @@ flutter:
   assets:
     - assets/data/
     - assets/images/
+    - assets/html/
+    - assets/html/skills_sphere_animation.html
