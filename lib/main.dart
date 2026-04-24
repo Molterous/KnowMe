@@ -20,7 +20,7 @@ class PortfolioApp extends StatefulWidget {
 }
 
 class _PortfolioAppState extends State<PortfolioApp> {
-  bool _preloaderDone = false;
+  bool _preLoaderDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class _PortfolioAppState extends State<PortfolioApp> {
         theme: AppTheme.dark,
         routerConfig: appRouter,
         builder: (context, child) {
-          if (!_preloaderDone) {
+          if (!_preLoaderDone) {
             return PreloaderPage(
-              onComplete: () => setState(() => _preloaderDone = true),
+              onComplete: () => setState(() => _preLoaderDone = true),
             );
           }
           return child ?? const SizedBox.shrink();

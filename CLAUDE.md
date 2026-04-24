@@ -435,3 +435,105 @@ A senior-grade Flutter Web app is:
 * **Testable** (clean domain)
 * **Performant** (web-optimized)
 * **Scalable** (DI + strict layering)
+
+---
+
+## 19. This Project — Portfolio
+
+### Overview
+
+Personal developer portfolio for **Aakash Choudhary** (Mobile Developer). A Flutter Web single-page app with deep-linked multi-page routing, data-driven via a local JSON asset, and an interactive 3D skills sphere embedded via HTML.
+
+### Key Facts
+
+* **Data source**: `assets/data/portfolio_data.json` — single JSON file drives all content (personal info, experience, projects, skills, education). No network calls.
+* **Local module**: `./module` (`ds_core`) — shared design system / core utilities referenced as a path dependency.
+* **Skills sphere**: `assets/html/skills_sphere_animation.html` — loaded inside the app as a web view for the animated 3D sphere in the skills section.
+* **Routes**: `/` (home), `/experience`, `/projects`, `/projects/:id` — all use `NoTransitionPage` for instant navigation.
+* **Preloader**: `PreloaderPage` bootstraps the app and triggers `PortfolioDataRequested` before showing content.
+* **Shimmer**: `HomeShimmer` is shown during loading state.
+
+### Actual Project Tree
+
+```
+Portfolio/
+ ├── assets/
+ │    ├── data/
+ │    │    └── portfolio_data.json       # single source of truth for all content
+ │    ├── images/
+ │    │    └── self.jpg
+ │    └── html/
+ │         └── skills_sphere_animation.html
+ │
+ ├── lib/
+ │    ├── core/
+ │    │    ├── di/locator.dart
+ │    │    ├── error/
+ │    │    │    ├── exception_mapper.dart
+ │    │    │    ├── exceptions.dart
+ │    │    │    └── failures.dart
+ │    │    └── utils/
+ │    │         ├── app_assets.dart
+ │    │         └── app_strings.dart
+ │    │
+ │    ├── features/
+ │    │    └── portfolio/
+ │    │         ├── data/
+ │    │         │    ├── datasources/portfolio_local_datasource.dart
+ │    │         │    ├── models/portfolio_model.dart
+ │    │         │    └── repositories/portfolio_repository_impl.dart
+ │    │         ├── domain/
+ │    │         │    ├── entities/portfolio_entity.dart
+ │    │         │    ├── repositories/portfolio_repository.dart
+ │    │         │    └── usecases/get_portfolio_data.dart
+ │    │         └── presentation/
+ │    │              ├── bloc/
+ │    │              │    ├── portfolio_bloc.dart
+ │    │              │    ├── portfolio_event.dart
+ │    │              │    └── portfolio_state.dart
+ │    │              ├── pages/
+ │    │              │    ├── home_page.dart
+ │    │              │    ├── experience_page.dart
+ │    │              │    ├── projects_page.dart
+ │    │              │    ├── project_detail_page.dart
+ │    │              │    ├── preloader_page.dart
+ │    │              │    └── not_found_page.dart
+ │    │              └── widgets/
+ │    │                   ├── home_content.dart
+ │    │                   ├── home_shimmer.dart
+ │    │                   ├── nav_bar.dart
+ │    │                   ├── portfolio_footer.dart
+ │    │                   └── sections/
+ │    │                        ├── hero_section.dart
+ │    │                        ├── about_section.dart
+ │    │                        ├── skills_section.dart
+ │    │                        ├── experience_preview_section.dart
+ │    │                        ├── projects_preview_section.dart
+ │    │                        └── contact_section.dart
+ │    │
+ │    ├── routes/app_router.dart
+ │    └── main.dart
+ │
+ └── module/                            # ds_core local design system package
+```
+
+### Domain Entities (portfolio_entity.dart)
+
+* `PortfolioEntity` — root: personal, about, experience[], projects[], skills, education
+* `PersonalEntity` — name, title, subtitle, tagline, email, phone, location, available, links
+* `AboutEntity` — bio, highlights[], personalityChips[]
+* `ExperienceEntity` — id, company, role, type, location, duration, current, summary, highlights[], metrics[], tech[]
+* `ProjectEntity` — id, title, subtitle, platform[], status, description, highlights[], tech[], metrics[]
+* `SkillsEntity` — languages[], frameworks[], architecture[], tools[], cloud[], expertise[]
+* `EducationEntity` — degree, institution, affiliation, cgpa, year
+
+### BLoC Flow
+
+```
+PreloaderPage → PortfolioDataRequested → PortfolioBloc
+  → GetPortfolioData (use case)
+  → PortfolioRepositoryImpl
+  → PortfolioLocalDataSource (reads JSON asset)
+  → PortfolioState { status, data, error }
+  → HomeContent / pages consume via BlocBuilder
+```
