@@ -67,7 +67,9 @@ class _ExperiencePreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DsCard(
+    return TiltCard(
+      maxTilt: 0.03,
+      lift: 4,
       child: ResponsiveBuilder(
         mobile: _CardMobile(experience: experience),
         desktop: _CardDesktop(experience: experience),
@@ -126,7 +128,7 @@ class _CardDesktop extends StatelessWidget {
                 spacing: AppSpacing.sm,
                 runSpacing: AppSpacing.sm,
                 children:
-                    experience.metrics.map((m) => MetricChip(label: m)).toList(),
+                    experience.metrics.map((m) => AnimatedMetricChip(label: m)).toList(),
               ),
             ],
           ),
@@ -176,7 +178,7 @@ class _CardMobile extends StatelessWidget {
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
-          children: experience.metrics.map((m) => MetricChip(label: m)).toList(),
+          children: experience.metrics.map((m) => AnimatedMetricChip(label: m)).toList(),
         ),
       ],
     );

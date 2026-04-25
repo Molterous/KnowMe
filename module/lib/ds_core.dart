@@ -17,6 +17,14 @@ export 'src/widgets/ds_shimmer.dart';
 export 'src/widgets/max_width_box.dart';
 export 'src/widgets/scroll_indicator.dart';
 export 'src/widgets/counter_text.dart';
+export 'src/widgets/cursor_spotlight.dart';
+export 'src/widgets/tilt_card.dart';
+export 'src/widgets/magnetic_hover.dart';
+export 'src/widgets/word_stagger_text.dart';
+export 'src/widgets/scroll_progress.dart';
+export 'src/widgets/glow_chip.dart';
+export 'src/widgets/animated_metric_chip.dart';
+export 'src/widgets/animated_gradient_orb.dart';
 
 // utils
 export 'src/utils/responsive_utils.dart';

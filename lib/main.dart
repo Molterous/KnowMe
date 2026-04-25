@@ -37,7 +37,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
               onComplete: () => setState(() => _preLoaderDone = true),
             );
           }
-          return child ?? const SizedBox.shrink();
+          return CursorSpotlight(radius: 180, child: child ?? const SizedBox.shrink());
         },
       ),
     );

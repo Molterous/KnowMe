@@ -103,7 +103,15 @@ class _SkillGroupWidget extends StatelessWidget {
         Wrap(
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.sm,
-          children: group.items.map((i) => TagChip(label: i)).toList(),
+          children: [
+            for (var i = 0; i < group.items.length; i++)
+              ScrollReveal(
+                delay: Duration(milliseconds: 40 * i),
+                offset: const Offset(0, 12),
+                duration: const Duration(milliseconds: 380),
+                child: GlowChip(label: group.items[i]),
+              ),
+          ],
         ),
       ],
     );
