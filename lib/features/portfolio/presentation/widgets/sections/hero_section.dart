@@ -1,4 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
+import 'dart:async';
+import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui_web;
 import 'package:flutter/material.dart';
@@ -35,7 +37,16 @@ class _HeroDesktop extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.sizeOf(context).height * 0.92,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
+          // Slow-breathing accent orb behind everything
+          const Positioned(
+            right: -60,
+            top: 40,
+            child: IgnorePointer(
+              child: AnimatedGradientOrb(size: 520, opacity: 0.18),
+            ),
+          ),
           // Sphere — right two-thirds of the hero
           const Positioned.fill(
             child: Row(
@@ -54,9 +65,7 @@ class _HeroDesktop extends StatelessWidget {
           ),
           // Text — layered on top, fills the full area
           Positioned.fill(
-            child: FadeSlideTransition(
-              child: _HeroText(personal: personal, onViewWork: onViewWork),
-            ),
+            child: _HeroText(personal: personal, onViewWork: onViewWork),
           ),
           const Positioned(
             bottom: AppSpacing.xl,
@@ -82,7 +91,15 @@ class _HeroTablet extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.sizeOf(context).height * 0.92,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
+          const Positioned(
+            right: -40,
+            top: 40,
+            child: IgnorePointer(
+              child: AnimatedGradientOrb(size: 420, opacity: 0.16),
+            ),
+          ),
           // Sphere — right two-thirds of the hero
           const Positioned.fill(
             child: Row(
@@ -101,9 +118,7 @@ class _HeroTablet extends StatelessWidget {
           ),
           // Text — layered on top, fills the full area
           Positioned.fill(
-            child: FadeSlideTransition(
-              child: _HeroText(personal: personal, onViewWork: onViewWork),
-            ),
+            child: _HeroText(personal: personal, onViewWork: onViewWork),
           ),
         ],
       ),
@@ -146,64 +161,83 @@ class _HeroText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktop = context.isDesktop;
+    final nameStyle = isDesktop
+        ? AppTextStyles.displayLarge
+        : AppTextStyles.displayMedium;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         if (personal.available) ...[
-          _AvailableBadge(),
+          const FadeSlideTransition(child: _AvailableBadge()),
           const SizedBox(height: AppSpacing.xl),
         ],
-        Text(
-          personal.name,
-          style: isDesktop
-              ? AppTextStyles.displayLarge
-              : AppTextStyles.displayMedium,
+        WordStaggerText(
+          text: personal.name,
+          style: nameStyle,
+          initialDelay: const Duration(milliseconds: 120),
+          stagger: const Duration(milliseconds: 100),
         ),
         const SizedBox(height: AppSpacing.md),
-        Text(
-          personal.subtitle,
-          style: AppTextStyles.headlineMedium.copyWith(
-            color: AppColors.muted,
-            fontWeight: FontWeight.w400,
+        FadeSlideTransition(
+          delay: const Duration(milliseconds: 420),
+          child: Text(
+            personal.subtitle,
+            style: AppTextStyles.headlineMedium.copyWith(
+              color: AppColors.muted,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
-        Text(personal.tagline, style: AppTextStyles.bodyLarge),
+        FadeSlideTransition(
+          delay: const Duration(milliseconds: 560),
+          child: Text(personal.tagline, style: AppTextStyles.bodyLarge),
+        ),
         const SizedBox(height: AppSpacing.xxl),
-        Wrap(
-          spacing: AppSpacing.md,
-          runSpacing: AppSpacing.md,
-          children: [
-            DsButton(
-              label: AppStrings.viewWork,
-              onTap: onViewWork,
-            ),
-            DsButton(
-              label: AppStrings.sayHi,
-              variant: DsButtonVariant.ghost,
-              onTap: () async {
-                final uri = Uri.parse('mailto:${personal.email}');
-                if (await canLaunchUrl(uri)) launchUrl(uri);
-              },
-            ),
-          ],
+        FadeSlideTransition(
+          delay: const Duration(milliseconds: 700),
+          child: Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
+            children: [
+              MagneticHover(
+                child: DsButton(
+                  label: AppStrings.viewWork,
+                  onTap: onViewWork,
+                ),
+              ),
+              MagneticHover(
+                child: DsButton(
+                  label: AppStrings.sayHi,
+                  variant: DsButtonVariant.ghost,
+                  onTap: () async {
+                    final uri = Uri.parse('mailto:${personal.email}');
+                    if (await canLaunchUrl(uri)) launchUrl(uri);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: AppSpacing.xl),
-        Row(
-          children: [
-            Container(
-              width: 8,
-              height: 8,
-              decoration: const BoxDecoration(
-                color: AppColors.muted,
-                shape: BoxShape.circle,
+        FadeSlideTransition(
+          delay: const Duration(milliseconds: 820),
+          child: Row(
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.muted,
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Text(personal.location, style: AppTextStyles.labelLarge),
-          ],
+              const SizedBox(width: AppSpacing.sm),
+              Text(personal.location, style: AppTextStyles.labelLarge),
+            ],
+          ),
         ),
       ],
     );
@@ -211,6 +245,7 @@ class _HeroText extends StatelessWidget {
 }
 
 class _AvailableBadge extends StatelessWidget {
+  const _AvailableBadge();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -255,6 +290,7 @@ class _SkillsSphereView extends StatefulWidget {
 class _SkillsSphereViewState extends State<_SkillsSphereView> {
   static bool _registered = false;
   static const _viewType = 'skills-sphere';
+  StreamSubscription<html.MessageEvent>? _messageSub;
 
   @override
   void initState() {
@@ -273,6 +309,31 @@ class _SkillsSphereViewState extends State<_SkillsSphereView> {
           ..setAttribute('scrolling', 'no'),
       );
     }
+    _messageSub = html.window.onMessage.listen(_onIframeScroll);
+  }
+
+  void _onIframeScroll(html.MessageEvent event) {
+    if (!mounted) return;
+    final raw = event.data;
+    if (raw is! String) return;
+    Map<String, dynamic> data;
+    try {
+      data = jsonDecode(raw) as Map<String, dynamic>;
+    } catch (_) {
+      return;
+    }
+    if (data['type'] != 'sphere_wheel') return;
+    final delta = (data['deltaY'] as num?)?.toDouble() ?? 0.0;
+    final scrollable = Scrollable.maybeOf(context);
+    if (scrollable == null) return;
+    final pos = scrollable.position;
+    pos.jumpTo((pos.pixels + delta).clamp(pos.minScrollExtent, pos.maxScrollExtent));
+  }
+
+  @override
+  void dispose() {
+    _messageSub?.cancel();
+    super.dispose();
   }
 
   @override

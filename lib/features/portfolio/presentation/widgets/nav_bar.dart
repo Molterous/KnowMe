@@ -45,6 +45,11 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final content = _NavContent(
+      onSectionTap: widget.onSectionTap,
+      activeSection: widget.activeSection,
+    );
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       decoration: BoxDecoration(
@@ -53,27 +58,26 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
             : AppColors.background,
         border: Border(
           bottom: BorderSide(
-            color: _scrolled
-                ? AppColors.divider
-                : Colors.transparent,
+            color: _scrolled ? AppColors.divider : Colors.transparent,
             width: 1,
           ),
         ),
       ),
-      child: _scrolled
-          ? ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                child: _NavContent(
-                  onSectionTap: widget.onSectionTap,
-                  activeSection: widget.activeSection,
-                ),
-              ),
-            )
-          : _NavContent(
-              onSectionTap: widget.onSectionTap,
-              activeSection: widget.activeSection,
-            ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _scrolled
+              ? ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                    child: content,
+                  ),
+                )
+              : content,
+          if (widget.scrollController != null)
+            ScrollProgressBar(controller: widget.scrollController!),
+        ],
+      ),
     );
   }
 }

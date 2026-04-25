@@ -209,6 +209,10 @@ function draw() {
 
 function loop() { draw(); requestAnimationFrame(loop); }
 loop();
+
+window.addEventListener('wheel', function(e) {
+  window.parent.postMessage(JSON.stringify({ type: 'sphere_wheel', deltaY: e.deltaY }), '*');
+}, { passive: true });
 </script>
 </body>
 </html>

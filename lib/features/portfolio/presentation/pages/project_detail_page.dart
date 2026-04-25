@@ -95,7 +95,7 @@ class ProjectDetailPage extends StatelessWidget {
                           spacing: AppSpacing.md,
                           runSpacing: AppSpacing.md,
                           children: project.metrics
-                              .map<Widget>((m) => MetricChip(label: m))
+                              .map<Widget>((m) => AnimatedMetricChip(label: m))
                               .toList(),
                         ),
                         const SizedBox(height: AppSpacing.xxl),
