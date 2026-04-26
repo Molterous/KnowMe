@@ -91,10 +91,10 @@ class ExperienceCardShimmer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ShimmerBlock(width: 160, height: 20),
-                ShimmerBlock(width: 100, height: 14),
+                ShimmerBlock(width: 100, height: 20),
+                Spacer(),
+                ShimmerBlock(width: 60, height: 14),
               ],
             ),
             SizedBox(height: AppSpacing.sm),
@@ -153,6 +153,184 @@ class ProjectCardShimmer extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// About section skeleton
+class AboutSectionShimmer extends StatelessWidget {
+  const AboutSectionShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DsShimmer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Section header
+          const ShimmerBlock(width: 60, height: 13),
+          const SizedBox(height: AppSpacing.sm),
+          const ShimmerBlock(width: 160, height: 36),
+          const SizedBox(height: AppSpacing.lg),
+          const ShimmerBlock(width: 48, height: 2),
+          const SizedBox(height: AppSpacing.xxl),
+          // Bio lines
+          const ShimmerBlock(height: 16),
+          const SizedBox(height: AppSpacing.sm),
+          const ShimmerBlock(height: 16),
+          const SizedBox(height: AppSpacing.sm),
+          const ShimmerBlock(width: 280, height: 16),
+          const SizedBox(height: AppSpacing.xxl),
+          // Highlight chips
+          const Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
+            children: [
+              ShimmerBlock(width: 110, height: 40, borderRadius: 6),
+              ShimmerBlock(width: 140, height: 40, borderRadius: 6),
+              ShimmerBlock(width: 120, height: 40, borderRadius: 6),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xxl),
+          // Education card
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.xl),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ShimmerBlock(width: 3, height: 60, borderRadius: 2),
+                SizedBox(width: AppSpacing.lg),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerBlock(width: 220, height: 16),
+                      SizedBox(height: AppSpacing.xs),
+                      ShimmerBlock(width: 180, height: 14),
+                      SizedBox(height: AppSpacing.sm),
+                      Row(
+                        children: [
+                          ShimmerBlock(width: 80, height: 26, borderRadius: 4),
+                          SizedBox(width: AppSpacing.sm),
+                          ShimmerBlock(width: 60, height: 26, borderRadius: 4),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.xxl),
+          // Personality chips
+          const ShimmerBlock(width: 200, height: 13),
+          const SizedBox(height: AppSpacing.md),
+          const Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              ShimmerBlock(width: 100, height: 30, borderRadius: 4),
+              ShimmerBlock(width: 80, height: 30, borderRadius: 4),
+              ShimmerBlock(width: 120, height: 30, borderRadius: 4),
+              ShimmerBlock(width: 90, height: 30, borderRadius: 4),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Skills section skeleton
+class SkillsSectionShimmer extends StatelessWidget {
+  const SkillsSectionShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DsShimmer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Section header
+          const ShimmerBlock(width: 60, height: 13),
+          const SizedBox(height: AppSpacing.sm),
+          const ShimmerBlock(width: 140, height: 36),
+          const SizedBox(height: AppSpacing.lg),
+          const ShimmerBlock(width: 48, height: 2),
+          const SizedBox(height: AppSpacing.xxl),
+          // Two rows of 3 skill groups
+          for (int row = 0; row < 2; row++) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(3, (col) => Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: col < 2 ? AppSpacing.xl : 0),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerBlock(width: 100, height: 12),
+                      SizedBox(height: AppSpacing.md),
+                      Wrap(
+                        spacing: AppSpacing.sm,
+                        runSpacing: AppSpacing.sm,
+                        children: [
+                          ShimmerBlock(width: 60, height: 28, borderRadius: 4),
+                          ShimmerBlock(width: 80, height: 28, borderRadius: 4),
+                          ShimmerBlock(width: 50, height: 28, borderRadius: 4),
+                          ShimmerBlock(width: 70, height: 28, borderRadius: 4),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+            ),
+            if (row == 0) const SizedBox(height: AppSpacing.xl),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// Contact section skeleton
+class ContactSectionShimmer extends StatelessWidget {
+  const ContactSectionShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const DsShimmer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Section header (two-line title)
+          ShimmerBlock(width: 60, height: 13),
+          SizedBox(height: AppSpacing.sm),
+          ShimmerBlock(width: 300, height: 36),
+          SizedBox(height: AppSpacing.sm),
+          ShimmerBlock(width: 220, height: 36),
+          SizedBox(height: AppSpacing.lg),
+          ShimmerBlock(width: 48, height: 2),
+          SizedBox(height: AppSpacing.xxl),
+          // Email
+          ShimmerBlock(width: 340, height: 32),
+          SizedBox(height: AppSpacing.xl),
+          // Social link buttons
+          Row(
+            children: [
+              ShimmerBlock(width: 100, height: 40, borderRadius: 4),
+              SizedBox(width: AppSpacing.md),
+              ShimmerBlock(width: 100, height: 40, borderRadius: 4),
+              SizedBox(width: AppSpacing.md),
+              ShimmerBlock(width: 100, height: 40, borderRadius: 4),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ class ScrollReveal extends StatefulWidget {
   const ScrollReveal({
     super.key,
     required this.child,
+    this.shimmer,
     this.visibilityThreshold = 0.1,
     this.duration = const Duration(milliseconds: 500),
     this.delay = Duration.zero,
@@ -12,6 +13,8 @@ class ScrollReveal extends StatefulWidget {
   });
 
   final Widget child;
+  /// Optional shimmer shown before reveal; crossfades out as [child] fades in.
+  final Widget? shimmer;
   final double visibilityThreshold;
   final Duration duration;
   final Duration delay;
@@ -55,20 +58,37 @@ class _ScrollRevealState extends State<ScrollReveal>
 
   @override
   Widget build(BuildContext context) {
+    final content = FadeTransition(
+      opacity: _opacity,
+      child: AnimatedBuilder(
+        animation: _slide,
+        builder: (_, child) => Transform.translate(
+          offset: _slide.value,
+          child: child,
+        ),
+        child: widget.child,
+      ),
+    );
+
     return VisibilityDetector(
       key: ValueKey(hashCode),
       onVisibilityChanged: _onVisibilityChanged,
-      child: FadeTransition(
-        opacity: _opacity,
-        child: AnimatedBuilder(
-          animation: _slide,
-          builder: (_, child) => Transform.translate(
-            offset: _slide.value,
-            child: child,
-          ),
-          child: widget.child,
-        ),
-      ),
+      child: widget.shimmer == null
+          ? content
+          : Stack(
+              children: [
+                IgnorePointer(
+                  child: FadeTransition(
+                    opacity: ReverseAnimation(_opacity),
+                    child: widget.shimmer!,
+                  ),
+                ),
+                IgnorePointer(
+                  ignoring: !_triggered,
+                  child: content,
+                ),
+              ],
+            ),
     );
   }
 }

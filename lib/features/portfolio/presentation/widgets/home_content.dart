@@ -108,39 +108,62 @@ class _HomeContentState extends State<HomeContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
+                    // main section
                     SizedBox(key: _heroKey, height: AppSpacing.xxl),
                     HeroSection(
                       personal: widget.data.personal,
                       onViewWork: () => _scrollToSection('work'),
                     ),
-                    SizedBox(key: _aboutKey, height: AppSpacing.section),
+                    SizedBox(key: _aboutKey, height: AppSpacing.xxl),
+
+                    // About Section
                     ScrollReveal(
+                      shimmer: const AboutSectionShimmer(),
                       child: AboutSection(
                         about: widget.data.about,
                         education: widget.data.education,
                       ),
                     ),
-                    SizedBox(key: _workKey, height: AppSpacing.section),
+                    SizedBox(key: _workKey, height: AppSpacing.xxl),
+
+                    // Experience Preview Section
                     ScrollReveal(
+                      shimmer: const SectionShimmer(
+                        cardCount: 2,
+                        cardShimmer: ExperienceCardShimmer(),
+                      ),
                       child: ExperiencePreviewSection(
                         experience: widget.data.experience,
                         onViewAll: () => context.go('/experience'),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.section),
+                    const SizedBox(height: AppSpacing.xxl),
+
+                    // Projects Preview Section
                     ScrollReveal(
+                      shimmer: const SectionShimmer(
+                        cardCount: 2,
+                        cardShimmer: ProjectCardShimmer(),
+                      ),
                       child: ProjectsPreviewSection(
                         projects: widget.data.projects,
                         onViewAll: () => context.go('/projects'),
                         onProjectTap: (id) => context.go('/projects/$id'),
                       ),
                     ),
-                    SizedBox(key: _skillsKey, height: AppSpacing.section),
+                    SizedBox(key: _skillsKey, height: AppSpacing.md),
+
+                    // Skills Section
                     ScrollReveal(
+                      shimmer: const SkillsSectionShimmer(),
                       child: SkillsSection(skills: widget.data.skills),
                     ),
-                    SizedBox(key: _contactKey, height: AppSpacing.section),
+                    SizedBox(key: _contactKey, height: AppSpacing.xxl),
+
+                    // Contact Section
                     ScrollReveal(
+                      shimmer: const ContactSectionShimmer(),
                       child: ContactSection(
                         personal: widget.data.personal,
                         onLinkTap: (url) async {
@@ -149,6 +172,8 @@ class _HomeContentState extends State<HomeContent> {
                         },
                       ),
                     ),
+
+                    // footer
                     const PortfolioFooter(),
                   ],
                 ),

@@ -45,18 +45,16 @@ class _SkillsGrid extends StatelessWidget {
     for (int i = 0; i < groups.length; i += columns) {
       final rowItems = groups.sublist(i, (i + columns).clamp(0, groups.length));
       rows.add(
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: rowItems.map((g) => Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  right: g != rowItems.last ? AppSpacing.xl : 0,
-                ),
-                child: _SkillGroupWidget(group: g),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: rowItems.map((g) => Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: g != rowItems.last ? AppSpacing.xl : 0,
               ),
-            )).toList(),
-          ),
+              child: _SkillGroupWidget(group: g),
+            ),
+          )).toList(),
         ),
       );
       if (i + columns < groups.length) {
