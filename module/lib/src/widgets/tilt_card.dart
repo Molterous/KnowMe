@@ -3,10 +3,15 @@ import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 
 /// Card wrapper that tilts in 3D toward the cursor and paints a soft shine
-/// that tracks the pointer. Uses a [ValueNotifier] + [AnimatedBuilder] for
-/// hover state so onHover does NOT call setState — mutating widgets during
-/// a mouse tracker update triggers `!_debugDuringDeviceUpdate`. All
-/// MouseRegions and foreground decorations stay statically mounted.
+/// that tracks the pointer.
+///
+/// Tilt tracks the cursor instantly via [Transform] — no animation lag.
+/// An [AnimationController] drives a 0→1 strength value that scales the tilt,
+/// lift, and shine on hover enter/exit so the effect eases in and out cleanly.
+///
+/// [ValueNotifier] is used for the cursor position so that notifying listeners
+/// does NOT call [setState] on this widget directly — calling setState during
+/// a MouseTracker device-update cycle triggers `!_debugDuringDeviceUpdate`.
 class TiltCard extends StatefulWidget {
   const TiltCard({
     super.key,
@@ -31,22 +36,30 @@ class TiltCard extends StatefulWidget {
   State<TiltCard> createState() => _TiltCardState();
 }
 
-class _HoverState {
-  const _HoverState({required this.hovered, this.local});
-  final bool hovered;
-  final Offset? local;
-
-  static const idle = _HoverState(hovered: false);
-}
-
-class _TiltCardState extends State<TiltCard> {
+class _TiltCardState extends State<TiltCard> with SingleTickerProviderStateMixin {
   final GlobalKey _cardKey = GlobalKey();
-  final ValueNotifier<_HoverState> _hover =
-      ValueNotifier<_HoverState>(_HoverState.idle);
+  late final AnimationController _controller;
+  late final Animation<double> _strength;
+  final ValueNotifier<Offset> _cursor = ValueNotifier(Offset.zero);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _strength = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+      reverseCurve: Curves.easeInCubic,
+    );
+  }
 
   @override
   void dispose() {
-    _hover.dispose();
+    _controller.dispose();
+    _cursor.dispose();
     super.dispose();
   }
 
@@ -62,83 +75,78 @@ class _TiltCardState extends State<TiltCard> {
     final radius = BorderRadius.circular(widget.borderRadius);
 
     return MouseRegion(
-      onEnter: (e) =>
-          _hover.value = _HoverState(hovered: true, local: e.localPosition),
-      onHover: (e) =>
-          _hover.value = _HoverState(hovered: true, local: e.localPosition),
-      onExit: (_) => _hover.value = _HoverState.idle,
+      onEnter: (e) {
+        _cursor.value = e.localPosition;
+        _controller.forward();
+      },
+      onHover: (e) => _cursor.value = e.localPosition,
+      onExit: (_) => _controller.reverse(),
       child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedBuilder(
-          animation: _hover,
-          builder: (context, _) {
-            final s = _hover.value;
+          animation: Listenable.merge([_strength, _cursor]),
+          builder: (context, child) {
+            final t = _strength.value;
+            final local = _cursor.value;
             final size = _cardSize();
-            final nx = (s.local != null && size.width > 0)
-                ? (s.local!.dx / size.width) * 2 - 1
-                : 0.0;
-            final ny = (s.local != null && size.height > 0)
-                ? (s.local!.dy / size.height) * 2 - 1
-                : 0.0;
-            final rotateY = s.hovered ? nx * widget.maxTilt : 0.0;
-            final rotateX = s.hovered ? -ny * widget.maxTilt : 0.0;
-            final translateY = s.hovered ? -widget.lift : 0.0;
+            final nx = size.width > 0 ? (local.dx / size.width) * 2 - 1 : 0.0;
+            final ny = size.height > 0 ? (local.dy / size.height) * 2 - 1 : 0.0;
 
-            return AnimatedContainer(
-              key: _cardKey,
-              duration: const Duration(milliseconds: 180),
-              curve: Curves.easeOut,
+            final cardColor = Color.lerp(
+              AppColors.surface.withOpacity(0.6),
+              AppColors.surface,
+              t,
+            )!;
+            final borderColor = Color.lerp(
+              AppColors.border.withOpacity(0.3),
+              AppColors.accent.withOpacity(0.5),
+              t,
+            )!;
+
+            return Transform(
+              alignment: Alignment.center,
               transform: Matrix4.identity()
                 ..setEntry(3, 2, 0.0008)
-                ..translate(0.0, translateY)
-                ..rotateX(rotateX)
-                ..rotateY(rotateY),
-              transformAlignment: Alignment.center,
-              padding: padding,
-              decoration: BoxDecoration(
-                color: s.hovered
-                    ? AppColors.surface
-                    : AppColors.surface.withOpacity(0.6),
-                border: Border.all(
-                  color: s.hovered
-                      ? AppColors.accent.withOpacity(0.5)
-                      : AppColors.border.withOpacity(0.3),
+                ..translate(0.0, -widget.lift * t)
+                ..rotateX(-ny * widget.maxTilt * t)
+                ..rotateY(nx * widget.maxTilt * t),
+              child: Container(
+                key: _cardKey,
+                padding: padding,
+                decoration: BoxDecoration(
+                  color: cardColor,
+                  border: Border.all(color: borderColor),
+                  borderRadius: radius,
+                  boxShadow: t > 0
+                      ? [
+                          BoxShadow(
+                            color: AppColors.accent.withOpacity(0.12 * t),
+                            blurRadius: 40 * t,
+                            spreadRadius: -4,
+                            offset: Offset(0, 12 * t),
+                          ),
+                        ]
+                      : const [],
                 ),
-                borderRadius: radius,
-                boxShadow: s.hovered
-                    ? [
-                        BoxShadow(
-                          color: AppColors.accent.withOpacity(0.12),
-                          blurRadius: 40,
-                          spreadRadius: -4,
-                          offset: const Offset(0, 12),
-                        ),
-                      ]
-                    : const [],
+                foregroundDecoration: _ShineDecoration(
+                  center: local,
+                  color: widget.showShine && t > 0
+                      ? AppColors.accent.withOpacity(0.18 * t)
+                      : const Color(0x00000000),
+                  borderRadius: radius,
+                ),
+                child: child,
               ),
-              // Always provide foregroundDecoration so Container's internal
-              // widget tree stays structurally stable across hover toggles.
-              // Toggling this between null and non-null re-wraps the child in
-              // a DecoratedBox, which remounts stateful descendants and would
-              // restart their one-shot animations (e.g. AnimatedMetricChip).
-              foregroundDecoration: _ShineDecoration(
-                center: s.local ?? Offset.zero,
-                color: widget.showShine && s.hovered && s.local != null
-                    ? AppColors.accent.withOpacity(0.18)
-                    : const Color(0x00000000),
-                borderRadius: radius,
-              ),
-              child: widget.child,
             );
           },
+          child: widget.child,
         ),
       ),
     );
   }
 }
 
-/// A [Decoration] painted via [AnimatedContainer.foregroundDecoration]
-/// — renders over the child but never participates in layout or hit testing.
+/// Foreground decoration that paints a radial shine spot at [center].
 class _ShineDecoration extends Decoration {
   const _ShineDecoration({
     required this.center,

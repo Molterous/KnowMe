@@ -68,8 +68,6 @@ class _ExperiencePreviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TiltCard(
-      maxTilt: 0.03,
-      lift: 4,
       child: ResponsiveBuilder(
         mobile: _CardMobile(experience: experience),
         desktop: _CardDesktop(experience: experience),
