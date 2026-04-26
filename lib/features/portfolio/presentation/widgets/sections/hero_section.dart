@@ -88,39 +88,28 @@ class _HeroTablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.92,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          const Positioned(
-            right: -40,
-            top: 40,
-            child: IgnorePointer(
-              child: AnimatedGradientOrb(size: 420, opacity: 0.16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+      child: FadeSlideTransition(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: _HeroText(personal: personal, onViewWork: onViewWork),
             ),
-          ),
-          // Sphere — right two-thirds of the hero
-          const Positioned.fill(
-            child: Row(
-              children: [
-                Spacer(),
-                Expanded(
-                  flex: 2,
-                  child: FadeSlideTransition(
-                    delay: Duration(milliseconds: 200),
-                    offset: Offset(24, 0),
-                    child: _SkillsSphereView(),
-                  ),
-                ),
-              ],
+            const SizedBox(width: AppSpacing.xxl),
+            const Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  SizedBox(height: AppSpacing.xxl),
+                  _HeroPhoto(size: 220),
+                ],
+              ),
             ),
-          ),
-          // Text — layered on top, fills the full area
-          Positioned.fill(
-            child: _HeroText(personal: personal, onViewWork: onViewWork),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

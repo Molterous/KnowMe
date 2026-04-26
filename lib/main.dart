@@ -37,7 +37,9 @@ class _PortfolioAppState extends State<PortfolioApp> {
               onComplete: () => setState(() => _preLoaderDone = true),
             );
           }
-          return CursorSpotlight(radius: 180, child: child ?? const SizedBox.shrink());
+          final actualChild = child ?? const SizedBox.shrink();
+          if (!ResponsiveUtils.isDesktop(context)) return actualChild;
+          return CursorSpotlight(radius: 180, child: actualChild);
         },
       ),
     );

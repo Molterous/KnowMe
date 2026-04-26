@@ -139,13 +139,11 @@ class _ProjectCard extends StatelessWidget {
             style: AppTextStyles.bodyMedium.copyWith(color: AppColors.accent),
           ),
           const SizedBox(height: AppSpacing.md),
-          Expanded(
-            child: Text(
-              project.description,
-              style: AppTextStyles.bodyLarge,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-            ),
+          Text(
+            project.description,
+            style: AppTextStyles.bodyMedium,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: AppSpacing.lg),
           Wrap(

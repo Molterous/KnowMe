@@ -4,7 +4,7 @@ enum DeviceType { mobile, tablet, desktop }
 
 abstract final class ResponsiveUtils {
   static const double mobileBreakpoint = 600;
-  static const double tabletBreakpoint = 1024;
+  static const double tabletBreakpoint = 1050;
 
   static DeviceType deviceType(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
