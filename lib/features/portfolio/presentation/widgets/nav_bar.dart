@@ -120,27 +120,20 @@ class _DesktopNavBar extends StatelessWidget {
             children: [
               _Logo(onTap: () => context.go('/')),
               const Spacer(),
-              _NavLink(label: 'Work', active: activeSection == 'work', onTap: () => _navigate(context, 'work')),
+              _NavLink(label: 'Work', active: activeSection == 'work', onTap: () => onSectionTap?.call('work')),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'About', active: activeSection == 'about', onTap: () => _navigate(context, 'about')),
+              _NavLink(label: 'About', active: activeSection == 'about', onTap: () => onSectionTap?.call('about')),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Experience', active: activeSection == 'experience', onTap: () => context.go('/experience')),
+              _NavLink(label: 'Experience', active: activeSection == 'work', onTap: () => onSectionTap?.call('experience')),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Projects', active: activeSection == 'projects', onTap: () => context.go('/projects')),
+              _NavLink(label: 'Projects', active: activeSection == 'projects', onTap: () => onSectionTap?.call('projects')),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Contact', active: activeSection == 'contact', onTap: () => _navigate(context, 'contact')),
+              _NavLink(label: 'Contact', active: activeSection == 'contact', onTap: () => onSectionTap?.call('contact')),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void _navigate(BuildContext context, String section) {
-    if (GoRouterState.of(context).uri.toString() != '/') {
-      context.go('/');
-    }
-    onSectionTap?.call(section);
   }
 }
 
@@ -191,14 +184,7 @@ class _MobileNavBar extends StatelessWidget {
       builder: (_) => _MobileMenu(
         onSectionTap: (section) {
           Navigator.pop(context);
-          if (GoRouterState.of(context).uri.toString() != '/') {
-            context.go('/');
-          }
           onSectionTap?.call(section);
-        },
-        onRouteTap: (route) {
-          Navigator.pop(context);
-          context.go(route);
         },
       ),
     );
@@ -206,9 +192,8 @@ class _MobileNavBar extends StatelessWidget {
 }
 
 class _MobileMenu extends StatelessWidget {
-  const _MobileMenu({required this.onSectionTap, required this.onRouteTap});
+  const _MobileMenu({required this.onSectionTap});
   final void Function(String) onSectionTap;
-  final void Function(String) onRouteTap;
 
   @override
   Widget build(BuildContext context) {
@@ -232,8 +217,8 @@ class _MobileMenu extends StatelessWidget {
           const SizedBox(height: AppSpacing.xxl),
           _MenuTile(label: 'Work', onTap: () => onSectionTap('work')),
           _MenuTile(label: 'About', onTap: () => onSectionTap('about')),
-          _MenuTile(label: 'Experience', onTap: () => onRouteTap('/experience')),
-          _MenuTile(label: 'Projects', onTap: () => onRouteTap('/projects')),
+          _MenuTile(label: 'Experience', onTap: () => onSectionTap('experience')),
+          _MenuTile(label: 'Projects', onTap: () => onSectionTap('projects')),
           _MenuTile(label: 'Contact', onTap: () => onSectionTap('contact')),
           const SizedBox(height: AppSpacing.lg),
         ],

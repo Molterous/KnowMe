@@ -49,7 +49,7 @@ class _ScrollRevealState extends State<ScrollReveal>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     if (!_triggered && info.visibleFraction >= widget.visibilityThreshold) {
-      _triggered = true;
+      setState(() => _triggered = true);
       Future.delayed(widget.delay, () {
         if (mounted) _controller.forward();
       });

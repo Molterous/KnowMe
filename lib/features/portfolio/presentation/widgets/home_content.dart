@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../domain/entities/portfolio_entity.dart';
 import 'nav_bar.dart';
@@ -27,6 +26,7 @@ class _HomeContentState extends State<HomeContent> {
   final _heroKey = GlobalKey();
   final _aboutKey = GlobalKey();
   final _workKey = GlobalKey();
+  final _projectsKey = GlobalKey();
   final _skillsKey = GlobalKey();
   final _contactKey = GlobalKey();
 
@@ -41,6 +41,7 @@ class _HomeContentState extends State<HomeContent> {
       ('hero', _heroKey),
       ('about', _aboutKey),
       ('work', _workKey),
+      ('projects', _projectsKey),
       ('skills', _skillsKey),
       ('contact', _contactKey),
     ];
@@ -62,7 +63,8 @@ class _HomeContentState extends State<HomeContent> {
   void _scrollToSection(String section) {
     final key = switch (section) {
       'about' => _aboutKey,
-      'work' => _workKey,
+      'work' || 'experience' => _workKey,
+      'projects' => _projectsKey,
       'skills' => _skillsKey,
       'contact' => _contactKey,
       _ => _heroKey,
@@ -109,7 +111,7 @@ class _HomeContentState extends State<HomeContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    // main section
+                    // Hero
                     SizedBox(key: _heroKey, height: AppSpacing.xxl),
                     HeroSection(
                       personal: widget.data.personal,
@@ -117,7 +119,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     SizedBox(key: _aboutKey, height: AppSpacing.xxl),
 
-                    // About Section
+                    // About
                     ScrollReveal(
                       shimmer: const AboutSectionShimmer(),
                       child: AboutSection(
@@ -127,7 +129,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     SizedBox(key: _workKey, height: AppSpacing.xxl),
 
-                    // Experience Preview Section
+                    // Experience
                     ScrollReveal(
                       shimmer: const SectionShimmer(
                         cardCount: 2,
@@ -135,33 +137,30 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                       child: ExperiencePreviewSection(
                         experience: widget.data.experience,
-                        onViewAll: () => context.go('/experience'),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.xxl),
+                    SizedBox(key: _projectsKey, height: AppSpacing.xxl),
 
-                    // Projects Preview Section
+                    // Projects
                     ScrollReveal(
                       shimmer: const SectionShimmer(
-                        cardCount: 2,
+                        cardCount: 1,
                         cardShimmer: ProjectCardShimmer(),
                       ),
                       child: ProjectsPreviewSection(
                         projects: widget.data.projects,
-                        onViewAll: () => context.go('/projects'),
-                        onProjectTap: (id) => context.go('/projects/$id'),
                       ),
                     ),
-                    SizedBox(key: _skillsKey, height: AppSpacing.md),
+                    SizedBox(key: _skillsKey, height: AppSpacing.xxl),
 
-                    // Skills Section
+                    // Skills
                     ScrollReveal(
                       shimmer: const SkillsSectionShimmer(),
                       child: SkillsSection(skills: widget.data.skills),
                     ),
                     SizedBox(key: _contactKey, height: AppSpacing.xxl),
 
-                    // Contact Section
+                    // Contact
                     ScrollReveal(
                       shimmer: const ContactSectionShimmer(),
                       child: ContactSection(
@@ -173,7 +172,6 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                     ),
 
-                    // footer
                     const PortfolioFooter(),
                   ],
                 ),
