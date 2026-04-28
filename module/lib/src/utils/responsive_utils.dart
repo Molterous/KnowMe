@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum DeviceType { mobile, tablet, desktop }
 
 abstract final class ResponsiveUtils {
-  static const double mobileBreakpoint = 600;
+  static const double mobileBreakpoint = 800;
   static const double tabletBreakpoint = 1050;
 
   static DeviceType deviceType(BuildContext context) {

@@ -77,7 +77,7 @@ class _ProjectsGridState extends State<_ProjectsGrid> {
             children: [
               for (int i = 0; i < row.length; i++) ...[
                 if (i > 0) const SizedBox(width: AppSpacing.lg),
-                Expanded(child: _ProjectCard(project: row[i])),
+                Expanded(child: _ProjectCard(project: row[i], fixedLayout: true)),
               ],
               for (int i = row.length; i < widget.columns; i++) ...[
                 const SizedBox(width: AppSpacing.lg),
@@ -107,12 +107,19 @@ class _ProjectsColumn extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  const _ProjectCard({required this.project});
+  const _ProjectCard({required this.project, this.fixedLayout = false});
   final ProjectEntity project;
+  final bool fixedLayout;
+
+  Widget _constrain(double minHeight, Widget child) => fixedLayout
+      ? ConstrainedBox(
+          constraints: BoxConstraints(minHeight: minHeight),
+          child: child,
+        )
+      : child;
 
   @override
   Widget build(BuildContext context) {
-
     return TiltCard(
       onTap: () => showDialog(
         context: context,
@@ -122,37 +129,56 @@ class _ProjectCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(project.title, style: AppTextStyles.headlineMedium),
-              ),
-              if (project.status == 'in_review')
-                const TagChip(label: 'In Review'),
-            ],
+          _constrain(
+            56,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    project.title,
+                    style: AppTextStyles.headlineMedium,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (project.status == 'in_review')
+                  const TagChip(label: 'In Review'),
+              ],
+            ),
           ),
           const SizedBox(height: AppSpacing.xs),
-          Text(
-            project.subtitle,
-            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.accent),
+          _constrain(
+            46,
+            Text(
+              project.subtitle,
+              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.accent),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(
-            project.description,
-            style: AppTextStyles.bodyMedium,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
+          _constrain(
+            90,
+            Text(
+              project.description,
+              style: AppTextStyles.bodyMedium,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: project.tech
-                .take(4)
-                .map((t) => TagChip(label: t))
-                .toList(),
+          _constrain(
+            56,
+            Wrap(
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
+              children: project.tech
+                  .take(3)
+                  .map((t) => TagChip(label: t))
+                  .toList(),
+            ),
           ),
         ],
       ),
