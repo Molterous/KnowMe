@@ -123,12 +123,12 @@
       "metrics": ["11 gesture types", "Real-time cursor control", "Zero-config Bonjour discovery", "Auto-reconnect"],
       "links": {},
       "images": [
-        "assets/images/mobile_mouse/mobile_mouse_app_connect.jpg",
-        "assets/images/mobile_mouse/mobile_mouse_tool_tip.png",
-        "assets/images/mobile_mouse/mobile_mouse_app_home.jpg",
-        "assets/images/mobile_mouse/mobile_mouse_app_event1.jpg",
-        "assets/images/mobile_mouse/mobile_mouse_app_event_2.jpg",
-        "assets/images/mobile_mouse/mobile_mouse_pref.png"
+        "assets/images/mobile_mouse/mobile_mouse_app_connect.webp",
+        "assets/images/mobile_mouse/mobile_mouse_tool_tip.webp",
+        "assets/images/mobile_mouse/mobile_mouse_app_home.webp",
+        "assets/images/mobile_mouse/mobile_mouse_app_event1.webp",
+        "assets/images/mobile_mouse/mobile_mouse_app_event_2.webp",
+        "assets/images/mobile_mouse/mobile_mouse_pref.webp"
       ]
     },
     {
@@ -150,11 +150,11 @@
       "metrics": ["macOS & Windows", "50-entry command history", "System tray support", "Auto ADB path detection"],
       "links": {},
       "images": [
-        "assets/images/adb/adb_tool_tip.png",
-        "assets/images/adb/adb_apps_page.png",
-        "assets/images/adb/adb_devices_page.png",
-        "assets/images/adb/adb_settings_page.png",
-        "assets/images/adb/adb_shell_page.png"
+        "assets/images/adb/adb_tool_tip.webp",
+        "assets/images/adb/adb_apps_page.webp",
+        "assets/images/adb/adb_devices_page.webp",
+        "assets/images/adb/adb_settings_page.webp",
+        "assets/images/adb/adb_shell_page.webp"
       ]
     },
     {
@@ -177,10 +177,10 @@
       "metrics": ["In review — App Store & Play Store", "10-round sessions", "1–10 accuracy scoring"],
       "links": {},
       "images": [
-        "assets/images/cognix/cognix_home.jpg",
-        "assets/images/cognix/cognix_game_1.jpg",
-        "assets/images/cognix/cognix_result.jpg",
-        "assets/images/cognix/cognix_score_1.jpg"
+        "assets/images/cognix/cognix_home.webp",
+        "assets/images/cognix/cognix_game_1.webp",
+        "assets/images/cognix/cognix_result.webp",
+        "assets/images/cognix/cognix_score_1.webp"
       ]
     },
     {

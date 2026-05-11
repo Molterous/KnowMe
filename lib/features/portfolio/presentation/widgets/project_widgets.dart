@@ -24,6 +24,15 @@ class ProjectImageCarousel extends StatelessWidget {
             images[i],
             height: height,
             fit: BoxFit.contain,
+            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+              if (wasSynchronouslyLoaded || frame != null) return child;
+              return SizedBox(
+                width: height * 0.65,
+                child: DsShimmer(
+                  child: ShimmerBlock(height: height, borderRadius: 0),
+                ),
+              );
+            },
           ),
         ),
       ),
