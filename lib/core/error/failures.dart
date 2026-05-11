@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ErrorType { asset, parse, unknown }
+enum ErrorType { asset, parse, network, unknown }
 
 class Failure extends Equatable {
   final ErrorType type;
