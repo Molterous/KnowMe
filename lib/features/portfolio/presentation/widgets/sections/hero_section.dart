@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:ui_web' as ui_web;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ds_core/ds_core.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../core/utils/app_assets.dart';
@@ -279,27 +280,39 @@ class _SkillsSphereView extends StatefulWidget {
 
 class _SkillsSphereViewState extends State<_SkillsSphereView> {
   static bool _registered = false;
+  static String? _blobUrl;
   static const _viewType = CoreStrings.sphereViewType;
   StreamSubscription<html.MessageEvent>? _messageSub;
+  bool _ready = false;
 
   @override
   void initState() {
     super.initState();
-    if (!_registered) {
-      _registered = true;
-      ui_web.platformViewRegistry.registerViewFactory(
-        _viewType,
-        (int id) => html.IFrameElement()
-          ..src = AppAssets.skillsSphere
-          ..style.border = 'none'
-          ..style.width = '100%'
-          ..style.height = '100%'
-          ..style.background = 'transparent'
-          ..setAttribute('allowtransparency', 'true')
-          ..setAttribute('scrolling', 'no'),
-      );
-    }
+    _loadSphere();
     _messageSub = html.window.onMessage.listen(_onIframeScroll);
+  }
+
+  Future<void> _loadSphere() async {
+    if (_registered) {
+      if (mounted) setState(() => _ready = true);
+      return;
+    }
+    final content = await rootBundle.loadString(AppAssets.skillsSphere);
+    final blob = html.Blob([content], 'text/html');
+    _blobUrl = html.Url.createObjectUrl(blob);
+    ui_web.platformViewRegistry.registerViewFactory(
+      _viewType,
+      (int id) => html.IFrameElement()
+        ..src = _blobUrl!
+        ..style.border = 'none'
+        ..style.width = '100%'
+        ..style.height = '100%'
+        ..style.background = 'transparent'
+        ..setAttribute('allowtransparency', 'true')
+        ..setAttribute('scrolling', 'no'),
+    );
+    _registered = true;
+    if (mounted) setState(() => _ready = true);
   }
 
   void _onIframeScroll(html.MessageEvent event) {
@@ -328,6 +341,7 @@ class _SkillsSphereViewState extends State<_SkillsSphereView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_ready) return const SizedBox.expand();
     return const SizedBox.expand(
       child: HtmlElementView(viewType: _viewType),
     );
