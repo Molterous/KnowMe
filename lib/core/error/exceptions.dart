@@ -10,3 +10,7 @@ class AssetException extends AppException {
 class ParseException extends AppException {
   const ParseException(super.message);
 }
+
+class NetworkException extends AppException {
+  const NetworkException(super.message);
+}

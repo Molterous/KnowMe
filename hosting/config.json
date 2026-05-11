@@ -1,0 +1,252 @@
+{
+  "personal": {
+    "name": "Aakash Choudhary",
+    "title": "Mobile Application Developer",
+    "subtitle": "Flutter & Dart Specialist · Native Android & iOS Developer",
+    "tagline": "Building scalable cross-platform apps with 4+ years of precision.",
+    "email": "aakashgarud007@gmail.com",
+    "phone": "+91-9520366686",
+    "location": "Gurugram, India",
+    "available": true,
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/aakash-choudhary-92298b1ab/",
+      "github": "https://github.com/Molterous",
+      "leetcode": "https://leetcode.com/u/Molterous/"
+    }
+  },
+  "about": {
+    "bio": "Results-driven Mobile Developer with 4+ years of experience designing, developing, and deploying cross-platform and native applications across Android, iOS, and desktop. I care deeply about clean architecture, performance, and shipping things that actually work.",
+    "highlights": [
+      "4+ years of experience",
+      "3 companies, 6+ apps shipped",
+      "Android · iOS · Flutter",
+      "Mobile · Window · MacOS",
+      "8.2 CGPA — B.Tech CSE"
+    ],
+    "personality_chips": [
+      "BLoC Purist",
+      "Performance Nerd",
+      "15-day revamp guy",
+      "DRM wizard",
+      "App size reducer",
+      "Clean arch advocate"
+    ]
+  },
+  "experience": [
+    {
+      "id": "wiom",
+      "company": "Wiom",
+      "role": "SDE-2",
+      "type": "Android · Flutter",
+      "location": "Gurugram",
+      "duration": "Oct 2025 – Present",
+      "start_date": "2025-10",
+      "end_date": null,
+      "current": true,
+      "summary": "Revamped end-to-end booking & payment flow for 1.7L+ users (3–4K DAU).",
+      "highlights": [
+        "Delivered complete app revamp in 15 days for the 26 Jan release under strict timeline with AI tool adaptation",
+        "Built and scaled a support chat system, improving engagement and reducing support friction",
+        "Improved payment reliability (JusPay) by resolving critical issues in transaction flow and receipt handling",
+        "Implemented A/B testing for booking flow, enabling data-driven UX improvements",
+        "Developed installation & router recovery flows, improving onboarding success",
+        "Reduced app size from 35MB → 15MB, improving install rate and performance",
+        "Resolved ANR/crash issues and optimised performance, improving overall app stability"
+      ],
+      "metrics": ["1.7L+ users", "35MB → 15MB", "15-day full revamp", "3–4K DAU"],
+      "tech": ["Flutter", "Android", "JusPay", "A/B Testing", "CI/CD"]
+    },
+    {
+      "id": "visionias",
+      "company": "VisionIAS",
+      "role": "Mobile Application Developer",
+      "type": "Android · Flutter · iOS",
+      "location": "Noida",
+      "duration": "Apr 2023 – Oct 2025",
+      "start_date": "2023-04",
+      "end_date": "2025-10",
+      "current": false,
+      "summary": "Delivered 3 key apps across Android, iOS & Flutter Desktop, boosting user engagement 40%.",
+      "highlights": [
+        "Delivered 3 key apps (Android, iOS, Flutter Desktop/Mobile), boosting user engagement 40%",
+        "Optimised widget rebuilds with typedef, callbacks & BLoC, improving app speed significantly",
+        "Built a custom walkthrough widget, increasing first-time user adoption 25%",
+        "Implemented video & PDF watermarking + encryption, cutting unauthorised sharing 70%",
+        "Created backend-driven widget builder, shortening release cycles 30%",
+        "Enabled native DRM-secure video playback across Android/iOS/macOS with zero lag",
+        "Added widget-to-PDF/JPG convertor and seamless sharing, improving app utility",
+        "Integrated secure payment gateways, raising in-app course purchases 15%",
+        "Built custom iOS views with graphical stats to enhance learner analytics"
+      ],
+      "metrics": ["+40% engagement", "+25% adoption", "70% less piracy", "-30% release cycles"],
+      "tech": ["Flutter", "Android", "iOS", "Swift", "BLoC", "AWS S3", "DRM", "Kotlin"]
+    },
+    {
+      "id": "zunpulse",
+      "company": "Zunpulse",
+      "role": "SDE-1",
+      "type": "Flutter · Android",
+      "location": "Gurugram",
+      "duration": "Mar 2022 – Mar 2023",
+      "start_date": "2022-03",
+      "end_date": "2023-03",
+      "current": false,
+      "summary": "Led complete app overhaul using Redux + MVC, reducing defects 30%.",
+      "highlights": [
+        "Led complete app overhaul using Redux + MVC, reducing defects 30%",
+        "Developed 3–4 modules independently, cutting time-to-market 20%",
+        "Integrated Native Views & React website via JS Channels, speeding interactions 25%",
+        "Maintained & optimized native Android code, ensuring zero integration failures"
+      ],
+      "metrics": ["-30% defects", "-20% time-to-market", "+25% interactions", "0 integration failures"],
+      "tech": ["Flutter", "Android", "Redux", "MVC", "JS Channels", "React", "Kotlin"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "mobile-mouse",
+      "title": "MobileMouse",
+      "subtitle": "Use your phone as a wireless Mac trackpad over WebSocket",
+      "platform": ["Flutter", "Swift", "Android", "iOS", "macOS"],
+      "status": "completed",
+      "description": "Turn any Android or iOS phone into a wireless Mac trackpad. The phone runs a Flutter app that captures multi-touch gestures and streams JSON events over WebSocket; a native SwiftUI menu-bar app on the Mac translates them into real cursor movement, clicks, scrolls, and macOS system gestures via CoreGraphics and AppleScript.",
+      "highlights": [
+        "1-finger drag moves the cursor; single tap = left click; double tap = double click; 2-finger tap = right click",
+        "2-finger vertical drag scrolls; 2-finger pinch sends a CGEvent scale (zoom); 3-finger swipes trigger Mission Control, App Exposé, and desktop switching; 4-finger swipe up shows the desktop",
+        "Raw multi-touch captured via Flutter Listener widget — bypasses gesture recognizer conflicts for precise pointer tracking",
+        "Mac WebSocket server built on NWListener (Network.framework) — advertises itself via Bonjour (_mobilemouse._tcp.) for zero-config discovery",
+        "CoreGraphics CGEventEngine dispatches cursor move, click, scroll, and zoom events; AppleScript handles macOS system gestures",
+        "Phone app auto-reconnects every 3 seconds (up to 5 attempts) after an unexpected disconnect; intentional close suppresses the retry loop",
+        "Mac menu-bar app shows live IP, port, connection status, sensitivity slider (0.5–3.0), and Launch at Login toggle via SMAppService"
+      ],
+      "tech": ["Flutter", "Dart", "Swift", "SwiftUI", "WebSocket", "CoreGraphics", "AppleScript", "Network.framework", "Bonjour"],
+      "metrics": ["11 gesture types", "Real-time cursor control", "Zero-config Bonjour discovery", "Auto-reconnect"],
+      "links": {},
+      "images": [
+        "assets/images/mobile_mouse/mobile_mouse_app_connect.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_tool_tip.png",
+        "assets/images/mobile_mouse/mobile_mouse_app_home.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_app_event1.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_app_event_2.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_pref.png"
+      ]
+    },
+    {
+      "id": "adb-helper",
+      "title": "ADB Helper",
+      "subtitle": "GUI for Android Debug Bridge on macOS & Windows",
+      "platform": ["Flutter", "macOS", "Windows"],
+      "status": "github_release",
+      "description": "A Flutter desktop app for macOS and Windows that gives you a clean GUI on top of ADB (Android Debug Bridge). Connect Android devices, browse installed apps, run shell commands, and manage packages — all without touching a terminal.",
+      "highlights": [
+        "Device panel lists all connected Android devices and emulators with model, serial ID, and connection state — auto-selects the first online device on launch",
+        "Shell tab runs any adb shell command on the selected device with resizable monospace output, stdout/stderr separation, exit code display, and 50-entry command history",
+        "Apps tab lists installed packages via pm list packages — filter by name, toggle third-party/all, and perform per-package actions (clear cache, clear data, uninstall) via context menu",
+        "System tray (macOS & Windows) — hides window on close and keeps the app alive; tray menu exposes device switching, per-app actions for first 30 packages, and refresh without opening the window",
+        "Settings page configures the ADB binary path with auto-detection across shell PATH, ~/.zshrc, Android Studio SDK location, and common Homebrew install paths",
+        "Binary validation confirms the ADB executable is reachable before saving the setting"
+      ],
+      "tech": ["Flutter", "Dart", "provider", "shared_preferences", "tray_manager", "window_manager", "url_launcher"],
+      "metrics": ["macOS & Windows", "50-entry command history", "System tray support", "Auto ADB path detection"],
+      "links": {},
+      "images": [
+        "assets/images/adb/adb_tool_tip.png",
+        "assets/images/adb/adb_apps_page.png",
+        "assets/images/adb/adb_devices_page.png",
+        "assets/images/adb/adb_settings_page.png",
+        "assets/images/adb/adb_shell_page.png"
+      ]
+    },
+    {
+      "id": "cognix",
+      "title": "Cognix",
+      "subtitle": "Psychometric visual-motor reaction time test",
+      "platform": ["Flutter", "Android", "iOS"],
+      "status": "in_review",
+      "description": "A Flutter-based psychometric test that simulates a train approaching a tunnel — the user must stop the train as accurately as possible when it aligns with the tunnel opening. Inspired by assessments used in cognitive science, driver training, and attention evaluation.",
+      "highlights": [
+        "Train approaches from a random side each round — tests symmetrical attention and spatial perception",
+        "Tap or spacebar input — works on both mobile touch and desktop keyboard",
+        "Scoring system from 1–10 per round based on pixel-accurate proximity to tunnel center",
+        "10 rounds per session with real-time visual feedback after each stop",
+        "Custom canvas rendering via CustomPainter — no game engine dependency",
+        "AnimationController-driven train movement with dart:ui for image rendering",
+        "Reusable widget architecture isolating left/right direction variants"
+      ],
+      "tech": ["Flutter", "Dart", "CustomPainter", "AnimationController", "dart:ui"],
+      "metrics": ["In review — App Store & Play Store", "10-round sessions", "1–10 accuracy scoring"],
+      "links": {},
+      "images": [
+        "assets/images/cognix/cognix_home.jpg",
+        "assets/images/cognix/cognix_game_1.jpg",
+        "assets/images/cognix/cognix_result.jpg",
+        "assets/images/cognix/cognix_score_1.jpg"
+      ]
+    },
+    {
+      "id": "feature-walkthrough",
+      "title": "Feature Walkthrough",
+      "subtitle": "Quadrant-aware onboarding overlay package",
+      "platform": ["Flutter", "Android", "iOS"],
+      "status": "completed",
+      "description": "A flexible Flutter package for in-app feature discovery and onboarding overlays. Highlights any widget with a positioned tooltip, automatically calculating the optimal quadrant (top/bottom/left/right) based on where the target sits on screen.",
+      "highlights": [
+        "GlobalKey + RenderObject used to locate target widget position at runtime with pixel precision",
+        "Quadrant-based positioning — overlay auto-places in the opposite screen quadrant to avoid occlusion",
+        "Step chaining via id/nextId — walkthroughs flow across multiple screens without manual coordination",
+        "WalkThroughNotifier singleton ensures each step is shown only once; persists across sessions",
+        "Fully customizable title, description, and display widget per step",
+        "Responsive across screen sizes — adapts layout based on available space",
+        "Used in production at VisionIAS — drove +25% first-time feature adoption"
+      ],
+      "tech": ["Flutter", "Dart", "GlobalKey", "RenderObject", "WalkThroughNotifier"],
+      "metrics": ["+25% first-time adoption", "Production-shipped", "Multi-screen chaining"],
+      "links": {},
+      "images": []
+    },
+    {
+      "id": "vendor-tracker",
+      "title": "Vendor Tracker",
+      "subtitle": "Real-time workforce management & field ops app",
+      "platform": ["Android", "Jetpack Compose"],
+      "status": "completed",
+      "description": "A robust Android application for real-time workforce management — task assignment, attendance tracking, live location monitoring, and quotation handling. Built with Jetpack Compose and Appwrite as backend.",
+      "highlights": [
+        "Role-based auth — Admin (full control) and User (task-scoped) roles with secure session management",
+        "24/7 live location tracking with lat/long/timestamp; admin map dashboard shows real-time positions and history",
+        "Task lifecycle management — Admin assigns with due dates, User accepts/starts/completes with push notifications",
+        "Dynamic quotation forms — configurable by admin, submitted by users, exportable from dashboard",
+        "Attendance module with login/logout tracking, working hours calculation, and monthly calendar summaries",
+        "Foreground location service with AlarmManager for reliable background tracking",
+        "Firebase Cloud Messaging for real-time task assignment and reminder push notifications"
+      ],
+      "tech": ["Jetpack Compose", "Kotlin", "Appwrite", "Google Maps API", "Firebase FCM", "MVVM", "Room"],
+      "metrics": ["Live location tracking", "Role-based access", "Full task lifecycle", "FCM notifications"],
+      "links": {},
+      "images": []
+    }
+  ],
+  "skills": {
+    "languages": ["Dart", "Kotlin", "Java", "Swift"],
+    "frameworks": ["Flutter", "Jetpack Compose", "SwiftUI"],
+    "architecture": ["BLoC", "Redux", "MVC", "MVVM", "SOLID Principles", "Clean Architecture"],
+    "tools": ["Android Studio", "Xcode", "VS Code", "Postman", "Git", "GitHub", "Jira", "Asana"],
+    "cloud": ["AWS S3", "Firebase", "Appwrite", "CI/CD Pipelines"],
+    "expertise": [
+      "DRM Video Playback",
+      "Payment Gateway Integration",
+      "Method Channels",
+      "Platform Views",
+      "App Store & Play Store Releases",
+      "Unit Testing",
+      "Performance Optimization"
+    ]
+  },
+  "education": {
+    "degree": "B.Tech — Computer Science & Engineering",
+    "institution": "Inderprastha Engineering College, Ghaziabad",
+    "affiliation": "AKTU",
+    "cgpa": "8.2",
+    "year": "2018 – 2022"
+  }
+}
