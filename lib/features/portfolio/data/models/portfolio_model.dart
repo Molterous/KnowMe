@@ -55,11 +55,15 @@ class PortfolioModel {
         title: m['title'] as String,
         subtitle: m['subtitle'] as String,
         platform: List<String>.from(m['platform'] as List),
-        status: m['status'] as String,
+        status: ProjectStatus.fromJson(m['status'] as String),
         description: m['description'] as String,
         highlights: List<String>.from(m['highlights'] as List),
         tech: List<String>.from(m['tech'] as List),
         metrics: List<String>.from(m['metrics'] as List),
+        links: (m['links'] as Map<String, dynamic>?)
+                ?.map((k, v) => MapEntry(k, v as String)) ??
+            {},
+        images: List<String>.from((m['images'] as List?) ?? []),
       );
 
   static SkillsEntity _parseSkills(Map<String, dynamic> m) => SkillsEntity(

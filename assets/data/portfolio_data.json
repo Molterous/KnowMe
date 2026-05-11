@@ -104,23 +104,45 @@
   ],
   "projects": [
     {
-      "id": "vendor-tracker",
-      "title": "Vendor Tracker",
-      "subtitle": "Real-time workforce management & field ops app",
-      "platform": ["Android", "Jetpack Compose"],
+      "id": "mobile-mouse",
+      "title": "MobileMouse",
+      "subtitle": "Use your phone as a wireless Mac trackpad over WebSocket",
+      "platform": ["Flutter", "Swift", "Android", "iOS", "macOS"],
       "status": "completed",
-      "description": "A robust Android application for real-time workforce management — task assignment, attendance tracking, live location monitoring, and quotation handling. Built with Jetpack Compose and Appwrite as backend.",
+      "description": "Turn any Android or iOS phone into a wireless Mac trackpad. The phone runs a Flutter app that captures multi-touch gestures and streams JSON events over WebSocket; a native SwiftUI menu-bar app on the Mac translates them into real cursor movement, clicks, scrolls, and macOS system gestures via CoreGraphics and AppleScript.",
       "highlights": [
-        "Role-based auth — Admin (full control) and User (task-scoped) roles with secure session management",
-        "24/7 live location tracking with lat/long/timestamp; admin map dashboard shows real-time positions and history",
-        "Task lifecycle management — Admin assigns with due dates, User accepts/starts/completes with push notifications",
-        "Dynamic quotation forms — configurable by admin, submitted by users, exportable from dashboard",
-        "Attendance module with login/logout tracking, working hours calculation, and monthly calendar summaries",
-        "Foreground location service with AlarmManager for reliable background tracking",
-        "Firebase Cloud Messaging for real-time task assignment and reminder push notifications"
+        "1-finger drag moves the cursor; single tap = left click; double tap = double click; 2-finger tap = right click",
+        "2-finger vertical drag scrolls; 2-finger pinch sends a CGEvent scale (zoom); 3-finger swipes trigger Mission Control, App Exposé, and desktop switching; 4-finger swipe up shows the desktop",
+        "Raw multi-touch captured via Flutter Listener widget — bypasses gesture recognizer conflicts for precise pointer tracking",
+        "Mac WebSocket server built on NWListener (Network.framework) — advertises itself via Bonjour (_mobilemouse._tcp.) for zero-config discovery",
+        "CoreGraphics CGEventEngine dispatches cursor move, click, scroll, and zoom events; AppleScript handles macOS system gestures",
+        "Phone app auto-reconnects every 3 seconds (up to 5 attempts) after an unexpected disconnect; intentional close suppresses the retry loop",
+        "Mac menu-bar app shows live IP, port, connection status, sensitivity slider (0.5–3.0), and Launch at Login toggle via SMAppService"
       ],
-      "tech": ["Jetpack Compose", "Kotlin", "Appwrite", "Google Maps API", "Firebase FCM", "MVVM", "Room"],
-      "metrics": ["Live location tracking", "Role-based access", "Full task lifecycle", "FCM notifications"]
+      "tech": ["Flutter", "Dart", "Swift", "SwiftUI", "WebSocket", "CoreGraphics", "AppleScript", "Network.framework", "Bonjour"],
+      "metrics": ["11 gesture types", "Real-time cursor control", "Zero-config Bonjour discovery", "Auto-reconnect"],
+      "links": {},
+      "images": []
+    },
+    {
+      "id": "adb-helper",
+      "title": "ADB Helper",
+      "subtitle": "GUI for Android Debug Bridge on macOS & Windows",
+      "platform": ["Flutter", "macOS", "Windows"],
+      "status": "github_release",
+      "description": "A Flutter desktop app for macOS and Windows that gives you a clean GUI on top of ADB (Android Debug Bridge). Connect Android devices, browse installed apps, run shell commands, and manage packages — all without touching a terminal.",
+      "highlights": [
+        "Device panel lists all connected Android devices and emulators with model, serial ID, and connection state — auto-selects the first online device on launch",
+        "Shell tab runs any adb shell command on the selected device with resizable monospace output, stdout/stderr separation, exit code display, and 50-entry command history",
+        "Apps tab lists installed packages via pm list packages — filter by name, toggle third-party/all, and perform per-package actions (clear cache, clear data, uninstall) via context menu",
+        "System tray (macOS & Windows) — hides window on close and keeps the app alive; tray menu exposes device switching, per-app actions for first 30 packages, and refresh without opening the window",
+        "Settings page configures the ADB binary path with auto-detection across shell PATH, ~/.zshrc, Android Studio SDK location, and common Homebrew install paths",
+        "Binary validation confirms the ADB executable is reachable before saving the setting"
+      ],
+      "tech": ["Flutter", "Dart", "provider", "shared_preferences", "tray_manager", "window_manager", "url_launcher"],
+      "metrics": ["macOS & Windows", "50-entry command history", "System tray support", "Auto ADB path detection"],
+      "links": {},
+      "images": []
     },
     {
       "id": "cognix",
@@ -139,7 +161,9 @@
         "Reusable widget architecture isolating left/right direction variants"
       ],
       "tech": ["Flutter", "Dart", "CustomPainter", "AnimationController", "dart:ui"],
-      "metrics": ["In review — App Store & Play Store", "10-round sessions", "1–10 accuracy scoring"]
+      "metrics": ["In review — App Store & Play Store", "10-round sessions", "1–10 accuracy scoring"],
+      "links": {},
+      "images": []
     },
     {
       "id": "feature-walkthrough",
@@ -158,7 +182,30 @@
         "Used in production at VisionIAS — drove +25% first-time feature adoption"
       ],
       "tech": ["Flutter", "Dart", "GlobalKey", "RenderObject", "WalkThroughNotifier"],
-      "metrics": ["+25% first-time adoption", "Production-shipped", "Multi-screen chaining"]
+      "metrics": ["+25% first-time adoption", "Production-shipped", "Multi-screen chaining"],
+      "links": {},
+      "images": []
+    },
+    {
+      "id": "vendor-tracker",
+      "title": "Vendor Tracker",
+      "subtitle": "Real-time workforce management & field ops app",
+      "platform": ["Android", "Jetpack Compose"],
+      "status": "completed",
+      "description": "A robust Android application for real-time workforce management — task assignment, attendance tracking, live location monitoring, and quotation handling. Built with Jetpack Compose and Appwrite as backend.",
+      "highlights": [
+        "Role-based auth — Admin (full control) and User (task-scoped) roles with secure session management",
+        "24/7 live location tracking with lat/long/timestamp; admin map dashboard shows real-time positions and history",
+        "Task lifecycle management — Admin assigns with due dates, User accepts/starts/completes with push notifications",
+        "Dynamic quotation forms — configurable by admin, submitted by users, exportable from dashboard",
+        "Attendance module with login/logout tracking, working hours calculation, and monthly calendar summaries",
+        "Foreground location service with AlarmManager for reliable background tracking",
+        "Firebase Cloud Messaging for real-time task assignment and reminder push notifications"
+      ],
+      "tech": ["Jetpack Compose", "Kotlin", "Appwrite", "Google Maps API", "Firebase FCM", "MVVM", "Room"],
+      "metrics": ["Live location tracking", "Role-based access", "Full task lifecycle", "FCM notifications"],
+      "links": {},
+      "images": []
     }
   ],
   "skills": {

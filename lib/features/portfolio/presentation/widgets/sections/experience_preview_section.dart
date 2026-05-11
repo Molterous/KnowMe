@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import '../../../domain/entities/portfolio_entity.dart';
+import '../../../../../../core/utils/app_strings.dart';
 
 class ExperiencePreviewSection extends StatelessWidget {
   const ExperiencePreviewSection({
@@ -15,7 +16,10 @@ class ExperiencePreviewSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(number: '02.', title: 'Experience'),
+        const SectionHeader(
+          number: AppStrings.sectionNumExperience,
+          title: AppStrings.sectionTitleExperience,
+        ),
         const SizedBox(height: AppSpacing.xxl),
         StaggerAnimation(
           children: experience.map((e) {
@@ -67,7 +71,7 @@ class _CardDesktop extends StatelessWidget {
               Text(experience.duration, style: AppTextStyles.labelLarge),
               if (experience.current) ...[
                 const SizedBox(height: AppSpacing.sm),
-                const MetricChip(label: 'Current'),
+                const MetricChip(label: AppStrings.labelCurrent),
               ],
             ],
           ),
@@ -139,7 +143,7 @@ class _CardMobile extends StatelessWidget {
               ),
             ),
             if (experience.current)
-              const MetricChip(label: 'Current'),
+              const MetricChip(label: AppStrings.labelCurrent),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -199,7 +203,7 @@ class _ExperienceDetailDialog extends StatelessWidget {
                         Text('· ${experience.location}', style: AppTextStyles.bodyMedium),
                         if (experience.current) ...[
                           const SizedBox(width: AppSpacing.md),
-                          const MetricChip(label: 'Current'),
+                          const MetricChip(label: AppStrings.labelCurrent),
                         ],
                       ],
                     ),
@@ -208,7 +212,7 @@ class _ExperienceDetailDialog extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xxl),
                     const Divider(color: AppColors.divider),
                     const SizedBox(height: AppSpacing.xl),
-                    Text('Highlights', style: AppTextStyles.headlineMedium),
+                    Text(AppStrings.labelHighlights, style: AppTextStyles.headlineMedium),
                     const SizedBox(height: AppSpacing.lg),
                     ...experience.highlights.map((h) => Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -233,7 +237,7 @@ class _ExperienceDetailDialog extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xl),
                       const Divider(color: AppColors.divider),
                       const SizedBox(height: AppSpacing.xl),
-                      Text('Impact', style: AppTextStyles.headlineMedium),
+                      Text(AppStrings.labelImpact, style: AppTextStyles.headlineMedium),
                       const SizedBox(height: AppSpacing.lg),
                       Wrap(
                         spacing: AppSpacing.md,
@@ -246,7 +250,7 @@ class _ExperienceDetailDialog extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xl),
                     const Divider(color: AppColors.divider),
                     const SizedBox(height: AppSpacing.xl),
-                    Text('Tech Stack', style: AppTextStyles.headlineMedium),
+                    Text(AppStrings.labelTechStack, style: AppTextStyles.headlineMedium),
                     const SizedBox(height: AppSpacing.lg),
                     Wrap(
                       spacing: AppSpacing.sm,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import '../../../domain/entities/portfolio_entity.dart';
+import '../project_widgets.dart';
+import '../../../../../../core/utils/app_strings.dart';
 
 class ProjectsPreviewSection extends StatelessWidget {
   const ProjectsPreviewSection({
@@ -15,7 +17,10 @@ class ProjectsPreviewSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeader(number: '03.', title: 'Selected Work'),
+        const SectionHeader(
+          number: AppStrings.sectionNumProjects,
+          title: AppStrings.sectionTitleSelectedWork,
+        ),
         const SizedBox(height: AppSpacing.xxl),
         ResponsiveBuilder(
           mobile: _ProjectsColumn(projects: projects),
@@ -143,8 +148,8 @@ class _ProjectCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (project.status == 'in_review')
-                  const TagChip(label: 'In Review'),
+
+                _buildCardTag(project.status),
               ],
             ),
           ),
@@ -184,6 +189,12 @@ class _ProjectCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildCardTag(ProjectStatus status) => switch (status) {
+        ProjectStatus.inReview => const TagChip(label: AppStrings.statusInReview),
+        ProjectStatus.githubRelease => const TagChip(label: AppStrings.statusGithubRelease),
+        ProjectStatus.completed => const SizedBox.shrink(),
+      };
 }
 
 // ── Full-screen detail dialog ─────────────────────────────────────────────────
@@ -218,13 +229,21 @@ class _ProjectDetailDialog extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Overview', style: AppTextStyles.headlineMedium),
+                    if (project.images.isNotEmpty) ...[
+                      Text(AppStrings.labelScreenshots, style: AppTextStyles.headlineMedium),
+                      const SizedBox(height: AppSpacing.lg),
+                      ProjectImageCarousel(images: project.images, height: 240),
+                      const SizedBox(height: AppSpacing.xxl),
+                      const Divider(color: AppColors.divider),
+                      const SizedBox(height: AppSpacing.xl),
+                    ],
+                    Text(AppStrings.labelOverview, style: AppTextStyles.headlineMedium),
                     const SizedBox(height: AppSpacing.md),
                     Text(project.description, style: AppTextStyles.bodyLarge),
                     const SizedBox(height: AppSpacing.xxl),
                     const Divider(color: AppColors.divider),
                     const SizedBox(height: AppSpacing.xl),
-                    Text('Highlights', style: AppTextStyles.headlineMedium),
+                    Text(AppStrings.labelHighlights, style: AppTextStyles.headlineMedium),
                     const SizedBox(height: AppSpacing.lg),
                     ...project.highlights.map((h) => Padding(
                       padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -249,7 +268,7 @@ class _ProjectDetailDialog extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xl),
                       const Divider(color: AppColors.divider),
                       const SizedBox(height: AppSpacing.xl),
-                      Text('Impact', style: AppTextStyles.headlineMedium),
+                      Text(AppStrings.labelImpact, style: AppTextStyles.headlineMedium),
                       const SizedBox(height: AppSpacing.lg),
                       Wrap(
                         spacing: AppSpacing.md,
@@ -262,7 +281,7 @@ class _ProjectDetailDialog extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xl),
                     const Divider(color: AppColors.divider),
                     const SizedBox(height: AppSpacing.xl),
-                    Text('Tech Stack', style: AppTextStyles.headlineMedium),
+                    Text(AppStrings.labelTechStack, style: AppTextStyles.headlineMedium),
                     const SizedBox(height: AppSpacing.lg),
                     Wrap(
                       spacing: AppSpacing.sm,
@@ -296,8 +315,10 @@ class _ProjectDialogHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.lg, AppSpacing.md, AppSpacing.lg),
+      padding: const EdgeInsets.fromLTRB(
+          AppSpacing.xl, AppSpacing.lg, AppSpacing.md, AppSpacing.lg),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -306,21 +327,26 @@ class _ProjectDialogHeader extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(project.title, style: AppTextStyles.displaySmall),
+                      child: Text(project.title,
+                          style: AppTextStyles.displaySmall),
                     ),
-                    if (project.status == 'in_review')
-                      const TagChip(label: 'In Review'),
+                    if (project.status != ProjectStatus.completed)
+                      _buildStatusChip(project.status),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   project.subtitle,
-                  style: AppTextStyles.titleLarge.copyWith(color: AppColors.accent),
+                  style:
+                      AppTextStyles.titleLarge.copyWith(color: AppColors.accent),
                 ),
+                if (project.links.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  ProjectLinksRow(links: project.links),
+                ],
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.md),
           IconButton(
             onPressed: () => Navigator.of(context).pop(),
             icon: const Icon(Icons.close_rounded, color: AppColors.muted),
@@ -330,3 +356,9 @@ class _ProjectDialogHeader extends StatelessWidget {
     );
   }
 }
+
+Widget _buildStatusChip(ProjectStatus status) => switch (status) {
+      ProjectStatus.inReview => const TagChip(label: AppStrings.statusInReview),
+      ProjectStatus.githubRelease => const TagChip(label: AppStrings.statusGithubRelease),
+      ProjectStatus.completed => const SizedBox.shrink(),
+    };

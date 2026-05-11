@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class PortfolioFooter extends StatelessWidget {
   const PortfolioFooter({super.key});
@@ -31,12 +32,12 @@ class _FooterDesktop extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('Aakash Choudhary', style: AppTextStyles.titleMedium),
+        Text(AppStrings.footerName, style: AppTextStyles.titleMedium),
         Text(
-          '© ${DateTime.now().year} · Designed & Built by Aakash',
+          '© ${DateTime.now().year} · ${AppStrings.footerBuiltBy}',
           style: AppTextStyles.labelLarge,
         ),
-        Text('Noida, India', style: AppTextStyles.labelLarge),
+        Text(AppStrings.footerLocation, style: AppTextStyles.labelLarge),
       ],
     );
   }
@@ -49,10 +50,10 @@ class _FooterMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Aakash Choudhary', style: AppTextStyles.titleMedium),
+        Text(AppStrings.footerName, style: AppTextStyles.titleMedium),
         const SizedBox(height: AppSpacing.sm),
         Text(
-          '© ${DateTime.now().year} · Noida, India',
+          '© ${DateTime.now().year} · ${AppStrings.footerLocation}',
           style: AppTextStyles.labelLarge,
         ),
       ],

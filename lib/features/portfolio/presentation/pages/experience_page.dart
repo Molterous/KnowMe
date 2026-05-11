@@ -6,6 +6,7 @@ import '../bloc/portfolio_bloc.dart';
 import '../widgets/nav_bar.dart';
 import '../widgets/portfolio_footer.dart';
 import '../../domain/entities/portfolio_entity.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class ExperiencePage extends StatelessWidget {
   const ExperiencePage({super.key});
@@ -38,12 +39,15 @@ class ExperiencePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DsButton(
-                          label: '← Back to Home',
+                          label: AppStrings.backToHome,
                           variant: DsButtonVariant.text,
                           onTap: () => context.go('/'),
                         ),
                         const SizedBox(height: AppSpacing.xl),
-                        const SectionHeader(number: '02.', title: 'Experience'),
+                        const SectionHeader(
+                          number: AppStrings.sectionNumExperience,
+                          title: AppStrings.sectionTitleExperience,
+                        ),
                         const SizedBox(height: AppSpacing.xxl),
                         _TimelineList(experience: experience),
                         const PortfolioFooter(),

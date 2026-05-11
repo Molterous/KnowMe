@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/core_strings.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});
@@ -15,7 +17,7 @@ class NotFoundPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '404',
+                AppStrings.notFound404,
                 style: AppTextStyles.displayLarge.copyWith(
                   color: AppColors.accent,
                   fontSize: 120,
@@ -23,16 +25,16 @@ class NotFoundPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              Text('Page not found.', style: AppTextStyles.headlineMedium),
+              Text(AppStrings.notFoundTitle, style: AppTextStyles.headlineMedium),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                "The page you're looking for doesn't exist.",
+                AppStrings.notFoundSubtitle,
                 style: AppTextStyles.bodyLarge,
               ),
               const SizedBox(height: AppSpacing.xxl),
               DsButton(
-                label: '← Back Home',
-                onTap: () => context.go('/'),
+                label: AppStrings.backHome,
+                onTap: () => context.go(CoreStrings.routeHome),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class PreloaderPage extends StatefulWidget {
   const PreloaderPage({super.key, required this.onComplete});
@@ -63,7 +64,7 @@ class _PreloaderPageState extends State<PreloaderPage>
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'AC.',
+                AppStrings.logo,
                 style: AppTextStyles.displayLarge.copyWith(
                   color: AppColors.primaryText,
                   letterSpacing: -2,
