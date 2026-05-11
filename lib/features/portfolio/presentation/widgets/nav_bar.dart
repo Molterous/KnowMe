@@ -1,7 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
-import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/core_strings.dart';
 
 class PortfolioNavBar extends StatefulWidget {
   const PortfolioNavBar({super.key, this.onSectionTap, this.scrollController, this.activeSection});
@@ -118,17 +119,37 @@ class _DesktopNavBar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: horizontalPad),
           child: Row(
             children: [
-              _Logo(onTap: () => context.go('/')),
+              _Logo(onTap: () => onSectionTap?.call(CoreStrings.routeHome)),
               const Spacer(),
-              _NavLink(label: 'Work', active: activeSection == 'work', onTap: () => onSectionTap?.call('work')),
+              _NavLink(
+                label: AppStrings.navAbout,
+                active: activeSection == CoreStrings.sectionAbout,
+                onTap: () => onSectionTap?.call(CoreStrings.sectionAbout),
+              ),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'About', active: activeSection == 'about', onTap: () => onSectionTap?.call('about')),
+              _NavLink(
+                label: AppStrings.navExperience,
+                active: activeSection == CoreStrings.sectionWork,
+                onTap: () => onSectionTap?.call(CoreStrings.sectionExperience),
+              ),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Experience', active: activeSection == 'work', onTap: () => onSectionTap?.call('experience')),
+              _NavLink(
+                label: AppStrings.navProjects,
+                active: activeSection == CoreStrings.sectionProjects,
+                onTap: () => onSectionTap?.call(CoreStrings.sectionProjects),
+              ),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Projects', active: activeSection == 'projects', onTap: () => onSectionTap?.call('projects')),
+              _NavLink(
+                label: AppStrings.navSkills,
+                active: activeSection == CoreStrings.sectionSkills,
+                onTap: () => onSectionTap?.call(CoreStrings.sectionSkills),
+              ),
               const SizedBox(width: AppSpacing.xl),
-              _NavLink(label: 'Contact', active: activeSection == 'contact', onTap: () => onSectionTap?.call('contact')),
+              _NavLink(
+                label: AppStrings.navContact,
+                active: activeSection == CoreStrings.sectionContact,
+                onTap: () => onSectionTap?.call(CoreStrings.sectionContact),
+              ),
             ],
           ),
         ),
@@ -151,7 +172,7 @@ class _MobileNavBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       child: Row(
         children: [
-          _Logo(onTap: () => context.go('/')),
+          _Logo(onTap: () => onSectionTap?.call(CoreStrings.sectionAbout)),
           const Spacer(),
           HoverWidget(
             onTap: () => _openDrawer(context),
@@ -215,11 +236,11 @@ class _MobileMenu extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.xxl),
-          _MenuTile(label: 'Work', onTap: () => onSectionTap('work')),
-          _MenuTile(label: 'About', onTap: () => onSectionTap('about')),
-          _MenuTile(label: 'Experience', onTap: () => onSectionTap('experience')),
-          _MenuTile(label: 'Projects', onTap: () => onSectionTap('projects')),
-          _MenuTile(label: 'Contact', onTap: () => onSectionTap('contact')),
+          _MenuTile(label: AppStrings.navAbout, onTap: () => onSectionTap(CoreStrings.sectionAbout)),
+          _MenuTile(label: AppStrings.navExperience, onTap: () => onSectionTap(CoreStrings.sectionExperience)),
+          _MenuTile(label: AppStrings.navProjects, onTap: () => onSectionTap(CoreStrings.sectionProjects)),
+          _MenuTile(label: AppStrings.navSkills, onTap: () => onSectionTap(CoreStrings.sectionSkills)),
+          _MenuTile(label: AppStrings.navContact, onTap: () => onSectionTap(CoreStrings.sectionContact)),
           const SizedBox(height: AppSpacing.lg),
         ],
       ),
@@ -267,7 +288,7 @@ class _Logo extends StatelessWidget {
     return HoverWidget(
       onTap: onTap,
       builder: (_, isHovered) => Text(
-        'AC.',
+        AppStrings.logo,
         style: AppTextStyles.headlineLarge.copyWith(
           color: isHovered ? AppColors.accent : AppColors.primaryText,
           fontWeight: FontWeight.w700,

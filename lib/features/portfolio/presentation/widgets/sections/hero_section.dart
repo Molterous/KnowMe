@@ -8,6 +8,7 @@ import 'package:ds_core/ds_core.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/core_strings.dart';
 import '../../../domain/entities/portfolio_entity.dart';
 
 class HeroSection extends StatelessWidget {
@@ -202,7 +203,7 @@ class _HeroText extends StatelessWidget {
                   label: AppStrings.sayHi,
                   variant: DsButtonVariant.ghost,
                   onTap: () async {
-                    final uri = Uri.parse('mailto:${personal.email}');
+                    final uri = Uri.parse('${CoreStrings.mailtoScheme}${personal.email}');
                     if (await canLaunchUrl(uri)) launchUrl(uri);
                   },
                 ),
@@ -278,7 +279,7 @@ class _SkillsSphereView extends StatefulWidget {
 
 class _SkillsSphereViewState extends State<_SkillsSphereView> {
   static bool _registered = false;
-  static const _viewType = 'skills-sphere';
+  static const _viewType = CoreStrings.sphereViewType;
   StreamSubscription<html.MessageEvent>? _messageSub;
 
   @override
@@ -311,8 +312,8 @@ class _SkillsSphereViewState extends State<_SkillsSphereView> {
     } catch (_) {
       return;
     }
-    if (data['type'] != 'sphere_wheel') return;
-    final delta = (data['deltaY'] as num?)?.toDouble() ?? 0.0;
+    if (data[CoreStrings.sphereEventTypeKey] != CoreStrings.sphereMessageType) return;
+    final delta = (data[CoreStrings.sphereEventDeltaKey] as num?)?.toDouble() ?? 0.0;
     final scrollable = Scrollable.maybeOf(context);
     if (scrollable == null) return;
     final pos = scrollable.position;

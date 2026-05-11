@@ -4,6 +4,7 @@ import 'package:ds_core/ds_core.dart';
 import '../bloc/portfolio_bloc.dart';
 import '../widgets/home_shimmer.dart';
 import '../widgets/home_content.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
             const HomeShimmer(),
           PortfolioStatus.success => HomeContent(data: state.data!),
           PortfolioStatus.failure => _ErrorView(
-              message: state.error?.message ?? 'Something went wrong.',
+              message: state.error?.message ?? AppStrings.loadErrorFallback,
             ),
         },
       ),
@@ -37,12 +38,12 @@ class _ErrorView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Failed to load portfolio', style: AppTextStyles.headlineMedium),
+          Text(AppStrings.loadError, style: AppTextStyles.headlineMedium),
           const SizedBox(height: AppSpacing.sm),
           Text(message, style: AppTextStyles.bodyMedium),
           const SizedBox(height: AppSpacing.xl),
           DsButton(
-            label: 'Retry',
+            label: AppStrings.retry,
             onTap: () => context
                 .read<PortfolioBloc>()
                 .add(const PortfolioDataRequested()),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import '../../../domain/entities/portfolio_entity.dart';
+import '../../../../../../core/utils/app_strings.dart';
+import '../../../../../../core/utils/core_strings.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({
@@ -18,7 +20,10 @@ class ContactSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(number: '05.', title: "Let's build\nsomething."),
+          const SectionHeader(
+          number: AppStrings.sectionNumContact,
+          title: AppStrings.sectionTitleContact,
+        ),
           const SizedBox(height: AppSpacing.xxl),
           ResponsiveBuilder(
             mobile: _ContactMobile(personal: personal, onLinkTap: onLinkTap),
@@ -88,7 +93,7 @@ class _EmailButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HoverWidget(
-      onTap: () => onTap('mailto:$email'),
+      onTap: () => onTap('${CoreStrings.mailtoScheme}$email'),
       builder: (_, isHovered) => AnimatedDefaultTextStyle(
         duration: const Duration(milliseconds: 150),
         style: (context.isDesktop

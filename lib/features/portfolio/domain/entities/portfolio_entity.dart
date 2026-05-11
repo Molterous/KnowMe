@@ -96,16 +96,30 @@ class ExperienceEntity extends Equatable {
   List<Object> get props => [id, company, role, duration];
 }
 
+enum ProjectStatus {
+  completed,
+  inReview,
+  githubRelease;
+
+  static ProjectStatus fromJson(String value) => switch (value) {
+        'in_review' => ProjectStatus.inReview,
+        'github_release' => ProjectStatus.githubRelease,
+        _ => ProjectStatus.completed,
+      };
+}
+
 class ProjectEntity extends Equatable {
   final String id;
   final String title;
   final String subtitle;
   final List<String> platform;
-  final String status;
+  final ProjectStatus status;
   final String description;
   final List<String> highlights;
   final List<String> tech;
   final List<String> metrics;
+  final Map<String, String> links;
+  final List<String> images;
 
   const ProjectEntity({
     required this.id,
@@ -117,11 +131,14 @@ class ProjectEntity extends Equatable {
     required this.highlights,
     required this.tech,
     required this.metrics,
+    this.links = const {},
+    this.images = const [],
   });
 
   @override
   List<Object> get props => [id, title, status];
 }
+
 
 class SkillsEntity extends Equatable {
   final List<String> languages;

@@ -6,6 +6,7 @@ import '../bloc/portfolio_bloc.dart';
 import '../widgets/nav_bar.dart';
 import '../widgets/portfolio_footer.dart';
 import '../../domain/entities/portfolio_entity.dart';
+import '../../../../../core/utils/app_strings.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
@@ -38,12 +39,15 @@ class ProjectsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DsButton(
-                          label: '← Back to Home',
+                          label: AppStrings.backToHome,
                           variant: DsButtonVariant.text,
                           onTap: () => context.go('/'),
                         ),
                         const SizedBox(height: AppSpacing.xl),
-                        const SectionHeader(number: '03.', title: 'All Projects'),
+                        const SectionHeader(
+                          number: AppStrings.sectionNumProjects,
+                          title: AppStrings.sectionTitleAllProjects,
+                        ),
                         const SizedBox(height: AppSpacing.xxl),
                         ResponsiveBuilder(
                           mobile: Column(
@@ -109,8 +113,8 @@ class _ProjectCard extends StatelessWidget {
               Expanded(
                 child: Text(project.title, style: AppTextStyles.headlineMedium),
               ),
-              if (project.status == 'in_review')
-                const TagChip(label: 'In Review'),
+              if (project.status != ProjectStatus.completed)
+                _buildStatusChip(project.status),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -136,3 +140,9 @@ class _ProjectCard extends StatelessWidget {
     );
   }
 }
+
+Widget _buildStatusChip(ProjectStatus status) => switch (status) {
+      ProjectStatus.inReview => const TagChip(label: AppStrings.statusInReview),
+      ProjectStatus.githubRelease => const TagChip(label: AppStrings.statusGithubRelease),
+      ProjectStatus.completed => const SizedBox.shrink(),
+    };

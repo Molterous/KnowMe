@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import '../../../domain/entities/portfolio_entity.dart';
+import '../../../../../../core/utils/app_strings.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key, required this.skills});
@@ -9,19 +10,22 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final groups = [
-      _SkillGroup(label: 'Languages', items: skills.languages),
-      _SkillGroup(label: 'Frameworks & Platforms', items: skills.frameworks),
-      _SkillGroup(label: 'Architecture & Patterns', items: skills.architecture),
-      _SkillGroup(label: 'Cloud & DevOps', items: skills.cloud),
-      _SkillGroup(label: 'Tools', items: skills.tools),
-      _SkillGroup(label: 'Domain Expertise', items: skills.expertise),
+      _SkillGroup(label: AppStrings.skillsLanguages, items: skills.languages),
+      _SkillGroup(label: AppStrings.skillsFrameworks, items: skills.frameworks),
+      _SkillGroup(label: AppStrings.skillsArchitecture, items: skills.architecture),
+      _SkillGroup(label: AppStrings.skillsCloud, items: skills.cloud),
+      _SkillGroup(label: AppStrings.skillsTools, items: skills.tools),
+      _SkillGroup(label: AppStrings.skillsExpertise, items: skills.expertise),
     ];
 
     return FadeSlideTransition(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(number: '04.', title: 'Skills'),
+          const SectionHeader(
+            number: AppStrings.sectionNumSkills,
+            title: AppStrings.sectionTitleSkills,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           ResponsiveBuilder(
             mobile: _SkillsMobile(groups: groups),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import '../../../domain/entities/portfolio_entity.dart';
+import '../../../../../../core/utils/app_strings.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key, required this.about, required this.education});
@@ -28,7 +29,10 @@ class _AboutDesktop extends StatelessWidget {
       children: [
         const Expanded(
           flex: 4,
-          child: SectionHeader(number: '01.', title: 'About'),
+          child: SectionHeader(
+            number: AppStrings.sectionNumAbout,
+            title: AppStrings.sectionTitleAbout,
+          ),
         ),
         Expanded(
           flex: 6,
@@ -63,7 +67,10 @@ class _AboutMobile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(number: '01.', title: 'About'),
+          const SectionHeader(
+            number: AppStrings.sectionNumAbout,
+            title: AppStrings.sectionTitleAbout,
+          ),
           const SizedBox(height: AppSpacing.xxl),
           Text(about.bio, style: AppTextStyles.bodyLarge),
           const SizedBox(height: AppSpacing.xl),
@@ -148,7 +155,7 @@ class _EducationCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
-                    MetricChip(label: 'CGPA ${education.cgpa}'),
+                    MetricChip(label: '${AppStrings.cgpaLabel} ${education.cgpa}'),
                     const SizedBox(width: AppSpacing.sm),
                     TagChip(label: education.year),
                   ],
@@ -172,7 +179,7 @@ class _PersonalityChips extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'The person behind the code',
+          AppStrings.personBehindCode,
           style: AppTextStyles.labelLarge.copyWith(
             color: AppColors.accent,
             letterSpacing: 2,

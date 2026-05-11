@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ds_core/ds_core.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../domain/entities/portfolio_entity.dart';
+import '../../../../../core/utils/core_strings.dart';
 import 'nav_bar.dart';
 import 'portfolio_footer.dart';
 import 'sections/hero_section.dart';
@@ -21,7 +22,7 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
   final _scrollController = ScrollController();
-  String _activeSection = 'hero';
+  String _activeSection = CoreStrings.sectionHero;
 
   final _heroKey = GlobalKey();
   final _aboutKey = GlobalKey();
@@ -38,15 +39,15 @@ class _HomeContentState extends State<HomeContent> {
 
   void _onScroll() {
     final sections = [
-      ('hero', _heroKey),
-      ('about', _aboutKey),
-      ('work', _workKey),
-      ('projects', _projectsKey),
-      ('skills', _skillsKey),
-      ('contact', _contactKey),
+      (CoreStrings.sectionHero, _heroKey),
+      (CoreStrings.sectionAbout, _aboutKey),
+      (CoreStrings.sectionWork, _workKey),
+      (CoreStrings.sectionProjects, _projectsKey),
+      (CoreStrings.sectionSkills, _skillsKey),
+      (CoreStrings.sectionContact, _contactKey),
     ];
 
-    String current = 'hero';
+    String current = CoreStrings.sectionHero;
     for (final (name, key) in sections) {
       final ctx = key.currentContext;
       if (ctx == null) continue;
@@ -62,11 +63,11 @@ class _HomeContentState extends State<HomeContent> {
 
   void _scrollToSection(String section) {
     final key = switch (section) {
-      'about' => _aboutKey,
-      'work' || 'experience' => _workKey,
-      'projects' => _projectsKey,
-      'skills' => _skillsKey,
-      'contact' => _contactKey,
+      CoreStrings.sectionAbout => _aboutKey,
+      CoreStrings.sectionExperience => _workKey,
+      CoreStrings.sectionProjects => _projectsKey,
+      CoreStrings.sectionSkills => _skillsKey,
+      CoreStrings.sectionContact => _contactKey,
       _ => _heroKey,
     };
     final ctx = key.currentContext;
@@ -115,7 +116,7 @@ class _HomeContentState extends State<HomeContent> {
                     SizedBox(key: _heroKey, height: AppSpacing.xxl),
                     HeroSection(
                       personal: widget.data.personal,
-                      onViewWork: () => _scrollToSection('work'),
+                      onViewWork: () => _scrollToSection(CoreStrings.sectionProjects),
                     ),
                     SizedBox(key: _aboutKey, height: AppSpacing.xxl),
 
