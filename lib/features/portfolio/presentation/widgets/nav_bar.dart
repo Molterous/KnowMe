@@ -119,7 +119,7 @@ class _DesktopNavBar extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: horizontalPad),
           child: Row(
             children: [
-              _Logo(onTap: () => onSectionTap?.call(CoreStrings.routeHome)),
+              _Logo(onTap: () => onSectionTap?.call(CoreStrings.sectionHero)),
               const Spacer(),
               _NavLink(
                 label: AppStrings.navAbout,
