@@ -22,7 +22,6 @@ abstract final class AppStrings {
   static const sectionTitleAbout = 'About';
   static const sectionTitleExperience = 'Experience';
   static const sectionTitleSelectedWork = 'Selected Work';
-  static const sectionTitleAllProjects = 'All Projects';
   static const sectionTitleSkills = 'Skills';
   static const sectionTitleContact = "Let's build\nsomething.";
 
@@ -46,11 +45,6 @@ abstract final class AppStrings {
   static const labelScreenshots = 'Screenshots';
   static const labelCurrent = 'Current';
 
-  // ── Navigation buttons ────────────────────────────────────────────────────────
-  static const backToHome = '← Back to Home';
-  static const backToProjects = '← Back to Projects';
-  static const backHome = '← Back Home';
-
   // ── Project status chips ──────────────────────────────────────────────────────
   static const statusInReview = 'In Playstore Review';
   static const statusGithubRelease = 'GitHub Released';
@@ -62,18 +56,10 @@ abstract final class AppStrings {
   static const linkLabelPlayStore = 'Play Store';
   static const linkLabelAppStore = 'App Store';
 
-  // ── Not found ─────────────────────────────────────────────────────────────────
-  static const notFound404 = '404';
-  static const notFoundTitle = 'Page not found.';
-  static const notFoundSubtitle = "The page you're looking for doesn't exist.";
-
   // ── Footer ────────────────────────────────────────────────────────────────────
   static const footerName = 'Aakash Choudhary';
   static const footerLocation = 'Noida, India';
   static const footerBuiltBy = 'Designed & Built by Aakash';
-
-  // ── Page / meta ───────────────────────────────────────────────────────────────
-  static const homePageTitle = 'Aakash Choudhary — Mobile Developer';
 
   // ── Error / loading ───────────────────────────────────────────────────────────
   static const loadError = 'Failed to load portfolio';

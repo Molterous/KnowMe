@@ -8,14 +8,6 @@ abstract final class CoreStrings {
   static const sectionSkills = 'skills';
   static const sectionContact = 'contact';
 
-  // ── Routes ───────────────────────────────────────────────────────────────────
-  static const routeHome = '/';
-  static const routeExperience = '/experience';
-  static const routeProjects = '/projects';
-
-  // ── Router ───────────────────────────────────────────────────────────────────
-  static const routeNameHome = 'home';
-
   // ── Skills sphere iframe ──────────────────────────────────────────────────────
   static const sphereViewType = 'skills-sphere';
   static const sphereMessageType = 'sphere_wheel';
