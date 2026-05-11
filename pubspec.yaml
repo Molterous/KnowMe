@@ -31,5 +31,8 @@ flutter:
   assets:
     - assets/data/
     - assets/images/
+    - assets/images/adb/
+    - assets/images/cognix/
+    - assets/images/mobile_mouse/
     - assets/html/
     - assets/html/skills_sphere_animation.html
