@@ -122,7 +122,14 @@
       "tech": ["Flutter", "Dart", "Swift", "SwiftUI", "WebSocket", "CoreGraphics", "AppleScript", "Network.framework", "Bonjour"],
       "metrics": ["11 gesture types", "Real-time cursor control", "Zero-config Bonjour discovery", "Auto-reconnect"],
       "links": {},
-      "images": []
+      "images": [
+        "assets/images/mobile_mouse/mobile_mouse_app_connect.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_tool_tip.png",
+        "assets/images/mobile_mouse/mobile_mouse_app_home.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_app_event1.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_app_event_2.jpg",
+        "assets/images/mobile_mouse/mobile_mouse_pref.png"
+      ]
     },
     {
       "id": "adb-helper",
@@ -142,7 +149,13 @@
       "tech": ["Flutter", "Dart", "provider", "shared_preferences", "tray_manager", "window_manager", "url_launcher"],
       "metrics": ["macOS & Windows", "50-entry command history", "System tray support", "Auto ADB path detection"],
       "links": {},
-      "images": []
+      "images": [
+        "assets/images/adb/adb_tool_tip.png",
+        "assets/images/adb/adb_apps_page.png",
+        "assets/images/adb/adb_devices_page.png",
+        "assets/images/adb/adb_settings_page.png",
+        "assets/images/adb/adb_shell_page.png"
+      ]
     },
     {
       "id": "cognix",
@@ -163,7 +176,12 @@
       "tech": ["Flutter", "Dart", "CustomPainter", "AnimationController", "dart:ui"],
       "metrics": ["In review — App Store & Play Store", "10-round sessions", "1–10 accuracy scoring"],
       "links": {},
-      "images": []
+      "images": [
+        "assets/images/cognix/cognix_home.jpg",
+        "assets/images/cognix/cognix_game_1.jpg",
+        "assets/images/cognix/cognix_result.jpg",
+        "assets/images/cognix/cognix_score_1.jpg"
+      ]
     },
     {
       "id": "feature-walkthrough",
