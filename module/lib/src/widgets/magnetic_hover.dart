@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/responsive_utils.dart';
 
 /// Wraps a child that translates toward the cursor while hovered, within
 /// [pull] pixels. Smooth return to origin on exit.
@@ -58,6 +59,9 @@ class _MagneticHoverState extends State<MagneticHover> {
 
   @override
   Widget build(BuildContext context) {
+    if (!ResponsiveUtils.isDesktop(context)) {
+      return widget.child;
+    }
     return MouseRegion(
       onEnter: (e) => _onHover(e.localPosition),
       onHover: (e) => _onHover(e.localPosition),

@@ -3,6 +3,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../theme/app_spacing.dart';
+import '../utils/responsive_utils.dart';
 
 /// Same visual as [MetricChip] but if [label] starts with a number (e.g.
 /// "40% boost", "3x faster", "12k users"), the numeric portion counts up
@@ -42,6 +43,8 @@ class _AnimatedMetricChipState extends State<AnimatedMetricChip>
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = ResponsiveUtils.isDesktop(context);
+
     final chip = Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -52,25 +55,27 @@ class _AnimatedMetricChipState extends State<AnimatedMetricChip>
         border: Border.all(color: AppColors.accent.withOpacity(0.4)),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: AnimatedBuilder(
-        animation: _anim,
-        builder: (_, __) {
-          if (!_parsed.hasNumber) {
-            return Text(widget.label, style: AppTextStyles.accent);
-          }
-          final current = (_parsed.number * _anim.value);
-          final display = _parsed.isInt
-              ? current.round().toString()
-              : current.toStringAsFixed(1);
-          return Text(
-            '${_parsed.prefix}$display${_parsed.suffix}',
-            style: AppTextStyles.accent,
-          );
-        },
-      ),
+      child: isDesktop
+          ? AnimatedBuilder(
+              animation: _anim,
+              builder: (_, __) {
+                if (!_parsed.hasNumber) {
+                  return Text(widget.label, style: AppTextStyles.accent);
+                }
+                final current = (_parsed.number * _anim.value);
+                final display = _parsed.isInt
+                    ? current.round().toString()
+                    : current.toStringAsFixed(1);
+                return Text(
+                  '${_parsed.prefix}$display${_parsed.suffix}',
+                  style: AppTextStyles.accent,
+                );
+              },
+            )
+          : Text(widget.label, style: AppTextStyles.accent),
     );
 
-    if (!_parsed.hasNumber) return chip;
+    if (!_parsed.hasNumber || !isDesktop) return chip;
 
     return VisibilityDetector(
       key: ValueKey('metric_${widget.label}_$hashCode'),
