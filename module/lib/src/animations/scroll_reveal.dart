@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../utils/responsive_utils.dart';
 
 class ScrollReveal extends StatefulWidget {
   const ScrollReveal({
@@ -58,6 +59,9 @@ class _ScrollRevealState extends State<ScrollReveal>
 
   @override
   Widget build(BuildContext context) {
+    if (!ResponsiveUtils.isDesktop(context)) {
+      return widget.child;
+    }
     final content = FadeTransition(
       opacity: _opacity,
       child: AnimatedBuilder(

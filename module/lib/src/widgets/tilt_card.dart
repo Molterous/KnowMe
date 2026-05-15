@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../utils/responsive_utils.dart';
 
 /// Card wrapper that tilts in 3D toward the cursor and paints a soft shine
 /// that tracks the pointer.
@@ -73,6 +74,22 @@ class _TiltCardState extends State<TiltCard> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     final padding = widget.padding ?? const EdgeInsets.all(AppSpacing.xl);
     final radius = BorderRadius.circular(widget.borderRadius);
+
+    if (!ResponsiveUtils.isDesktop(context)) {
+      return GestureDetector(
+        onTap: widget.onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            border: Border.all(color: AppColors.border.withOpacity(0.3)),
+            borderRadius: radius,
+          ),
+          child: widget.child,
+        ),
+      );
+    }
 
     return MouseRegion(
       onEnter: (e) {

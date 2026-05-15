@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/responsive_utils.dart';
 
 class HoverWidget extends StatefulWidget {
   const HoverWidget({
@@ -19,6 +20,13 @@ class _HoverWidgetState extends State<HoverWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (!ResponsiveUtils.isDesktop(context)) {
+      return GestureDetector(
+        onTap: widget.onTap,
+        behavior: HitTestBehavior.opaque,
+        child: widget.builder(context, false),
+      );
+    }
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
