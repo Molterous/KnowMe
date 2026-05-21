@@ -67,14 +67,15 @@ class _PortfolioNavBarState extends State<PortfolioNavBar> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _scrolled
-              ? ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                    child: content,
-                  ),
-                )
-              : content,
+          if (_scrolled && context.isDesktop)
+            ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: content,
+              ),
+            )
+          else
+            content,
           if (widget.scrollController != null)
             ScrollProgressBar(controller: widget.scrollController!),
         ],
