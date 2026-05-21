@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../utils/responsive_utils.dart';
 
 class DsShimmer extends StatelessWidget {
   const DsShimmer({super.key, required this.child});
@@ -10,6 +11,7 @@ class DsShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!ResponsiveUtils.isDesktop(context)) return child;
     return Shimmer.fromColors(
       baseColor: AppColors.surface,
       highlightColor: AppColors.muted.withOpacity(0.15),
